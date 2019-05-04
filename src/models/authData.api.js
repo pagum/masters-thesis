@@ -1,9 +1,11 @@
 import api from "../utils/api";
 
 export const sendAuthData = async ({ username, password }) => {
-  const response = await api.post("/auth", {
+  const body = {
     username,
     password
-  });
+  };
+  console.log(body);
+  const response = await api.post("/auth", body);
   return response;
 };

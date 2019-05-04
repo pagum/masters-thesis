@@ -20,12 +20,12 @@ export const authData = {
       const { data } = await sendAuthData(payload);
 
       StorageService.set({
-        key: "superchrono-auth-token",
+        key: "auth-token",
         value: data.token,
         remember: payload.remember
       }).then(await Api.init());
       this.onSetIsAuth();
-      dispatch(push("/updates"));
+      //  dispatch(push("/updates"));
     }
   }
 };

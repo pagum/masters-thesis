@@ -103,7 +103,6 @@ const OkeLogo = styled.img`
 `;
 
 const LoginContainer = styled.div`
-  background-color: red;
   padding: 10px 20px;
   width: 40%;
   height: 50%;
