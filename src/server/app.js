@@ -1,8 +1,8 @@
-const express = require("express");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const chalk = require("chalk");
-var stringify = require("json-stringify-safe");
+import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
+import chalk from "chalk";
+import jwt from "jsonwebtoken";
 
 const hostname = "localhost";
 const port = 4000;
@@ -19,14 +19,26 @@ app.use(function(req, res, next) {
 });
 
 app.use(cors());
-app.use(bodyParser());
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+);
+app.use(bodyParser.json());
 app.options("*", cors());
 
 app.post("/auth", async (req, res) => {
-  if (true) {
-    res.send(stringify(req, null, 1));
+  if (req.body) {
+    const token = jwt.sign(
+      {
+        data: req.body.username
+      },
+      "secret",
+      { expiresIn: "3h" }
+    );
+    res.send(token);
   } else {
-    req.flash("error", "Username and passwordx are incorrect");
+    req.flash("error", "Username and password are incorrect");
     res.redirect("/login");
   }
 });

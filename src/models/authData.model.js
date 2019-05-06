@@ -21,7 +21,7 @@ export const authData = {
 
       StorageService.set({
         key: "auth-token",
-        value: data.token,
+        value: data,
         remember: payload.remember
       }).then(await Api.init());
       this.onSetIsAuth();

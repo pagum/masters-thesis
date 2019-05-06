@@ -5,7 +5,6 @@ export const sendAuthData = async ({ username, password }) => {
     username,
     password
   };
-  console.log(body);
   const response = await api.post("/auth", body);
   return response;
 };
