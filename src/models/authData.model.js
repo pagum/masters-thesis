@@ -9,6 +9,7 @@ export const authData = {
   state: { isAuth: false },
   reducers: {
     onSetIsAuth(state) {
+      console.log("isauth");
       return { ...state, isAuth: true };
     }
   },
@@ -27,5 +28,10 @@ export const authData = {
       this.onSetIsAuth();
       //  dispatch(push("/updates"));
     }
-  }
+  },
+  selectors: slice => ({
+    getAuthState(state) {
+      return slice(state => state.isAuth);
+    }
+  })
 };

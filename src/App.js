@@ -1,15 +1,41 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
+import { Route, Switch, Router } from "react-router-dom";
 import { Provider } from "react-redux";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+
+import { history } from "./history";
 import { store } from "./store";
 import "./App.css";
 import LoginPage from "./AuthModule/LoginPage";
+import ProtectedRoute from "./utils/ProtectedRoute/ProtectedRoute";
+import MenuAppBar from "./MenuAppBar/MenuAppBar";
 
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#5e76a3"
+    },
+    secondary: {
+      main: "#f44336"
+    }
+  }
+});
 class App extends Component {
   render() {
     return (
-      <Provider store={store}>
-        <LoginPage />
-      </Provider>
+      <MuiThemeProvider theme={theme}>
+        <Provider store={store}>
+          <Router history={history}>
+            <Fragment>
+              <MenuAppBar />
+              <Switch>
+                <Route exact path="/" component={LoginPage} />
+                <ProtectedRoute path="/updates" component={LoginPage} />
+              </Switch>
+            </Fragment>
+          </Router>
+        </Provider>
+      </MuiThemeProvider>
     );
   }
 }

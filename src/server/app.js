@@ -3,11 +3,23 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import chalk from "chalk";
 import jwt from "jsonwebtoken";
+import morgan from "morgan";
+import mongoose from "mongoose";
 
 const hostname = "localhost";
 const port = 4000;
 
 const app = express();
+mongoose
+  .connect(
+    process.env.MONGODB_URI || "mongodb://localhost:27017/Masters_thesis_DB",
+    { useNewUrlParser: true }
+  )
+  .then(() => {
+    console.log("====================================");
+    console.log("CONNECTED TO MONGODB!!!");
+    console.log("====================================");
+  });
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -18,6 +30,7 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.use(morgan("combined"));
 app.use(cors());
 app.use(
   bodyParser.urlencoded({
