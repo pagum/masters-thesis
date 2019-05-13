@@ -1,22 +1,30 @@
-import React from "react";
-import { Route, Redirect } from "react-router-dom";
-import { AuthConsumer } from "./AuthContext";
+import React, { Component } from 'react';
+import { Route, Redirect } from 'react-router-dom';
+import { AuthConsumer } from './AuthContext';
+import { select } from '../../store';
+import { connect } from 'react-redux';
 
-const ProtectedRoute = ({ component: Component, ...rest }) => {
-  return (
-    <AuthConsumer>
-      {({ isAuth }) => {
-        return (
-          <Route
-            render={props => {
-              return isAuth ? <Component {...props} /> : <Redirect to="/" />;
-            }}
-            {...rest}
-          />
-        );
-      }}
-    </AuthConsumer>
-  );
-};
+class ProtectedRoute extends Component {
+  render() {
+    const { component: Component, isAuthed, ...rest } = this.props;
+    console.log(this.props);
+    return (
+      <Route
+        render={props => {
+          return props.isAuthed ? (
+            <Component {...props} />
+          ) : (
+            <Redirect to="/" />
+          );
+        }}
+        {...rest}
+      />
+    );
+  }
+}
 
-export default ProtectedRoute;
+const mapState = state => ({
+  isAuthed: select.authData.getAuthState(state),
+});
+
+export default connect(mapState)(ProtectedRoute);

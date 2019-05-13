@@ -1,37 +1,38 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { withStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
-import { select } from "../store";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
+import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import { Redirect } from 'react-router-dom';
+import Menu from '@material-ui/core/Menu';
+import { select } from '../store';
+import Tab from '@material-ui/core/Tab';
+import { TabWrapper, ImageButton } from './Menu.style';
+import { wm, logoPgSmall } from '../assets/index';
+import { wmWebsite, pgWebsite } from '../utils/data';
 
 const styles = {
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   grow: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   menuButton: {
     marginLeft: -12,
-    marginRight: 20
-  }
+    marginRight: 20,
+  },
 };
 
 class MenuAppBar extends React.Component {
   state = {
-    anchorEl: null
+    anchorEl: null,
   };
-
+  componentDidUpdate = prevProps => {
+    console.log(prevProps);
+    console.log(this.props);
+  };
   handleMenu = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
@@ -40,37 +41,46 @@ class MenuAppBar extends React.Component {
     this.setState({ anchorEl: null });
   };
 
+  redirectTo = website => {
+    window.location.assign(website, '_blank');
+  };
+
   render() {
-    const { classes, isAuthed } = this.props;
-    const { anchorEl } = this.state;
-    const open = Boolean(anchorEl);
+    const { classes, isAuthed, logoutUser } = this.props;
+    console.log(isAuthed);
     return (
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
-            <IconButton
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="Menu"
-            >
-              <MenuIcon />
-            </IconButton>
+            <ImageButton
+              src={logoPgSmall}
+              onClick={() => this.redirectTo(pgWebsite)}
+            />
+            <ImageButton src={wm} onClick={() => this.redirectTo(wmWebsite)} />
 
-            {isAuthed && (
-              <Tabs
-                value={this.state.value}
-                onChange={this.handleChange}
-                variant="fullWidth"
-                indicatorColor="secondary"
-                textColor="secondary"
-              >
-                <Tab label="SUMMARY" />
-                <Tab label="TOOLS" />
-                <Tab label="ORDERS" />
-                <Tab label="CALCULATOR" />
-                <Tab label="LOG OUT" />
-              </Tabs>
-            )}
+            <TabWrapper
+              value={this.state.value}
+              onChange={this.handleChange}
+              variant="fullWidth"
+              indicatorColor="secondary"
+              textColor="secondary"
+            >
+              {isAuthed ? (
+                <Fragment>
+                  <Tab label="SUMMARY" />
+                  <Tab label="TOOLS" />
+                  <Tab label="ORDERS" />
+                  <Tab label="CALCULATOR" />
+                  <Tab label="ABOUT" />
+                  <Tab label="LOG OUT" onClick={logoutUser} />
+                </Fragment>
+              ) : (
+                <Fragment>
+                  <Tab label="ABOUT" />
+                  <Tab label="LOG IN" />
+                </Fragment>
+              )}
+            </TabWrapper>
           </Toolbar>
         </AppBar>
       </div>
@@ -79,10 +89,18 @@ class MenuAppBar extends React.Component {
 }
 
 MenuAppBar.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 const mapState = state => ({
-  isAuthed: select.authData.getAuthState(state)
+  isAuthed: select.authData.getAuthState(state),
+});
+const mapDispatch = dispatch => ({
+  logoutUser: dispatch.authData.logoutUser,
 });
 
-export default withStyles(styles)(connect(mapState)(MenuAppBar));
+export default withStyles(styles)(
+  connect(
+    mapState,
+    mapDispatch,
+  )(MenuAppBar),
+);

@@ -22,7 +22,13 @@ const StorageService = {
         ? localStorage.setItem(key, JSON.stringify(value))
         : sessionStorage.setItem(key, JSON.stringify(value));
       resolve();
-    })
+    }),
+  remove: key =>
+    new Promise(resolve => {
+      sessionStorage.removeItem(key);
+      localStorage.removeItem(key);
+      resolve();
+    }),
 };
 
 export default StorageService;
