@@ -32,8 +32,14 @@ class App extends Component {
                 <MenuAppBar />
                 <Switch>
                   <Route exact path="/" component={LoginPage} />
+                  <Route path="/about" component={EnhancedTable} />
                   <ProtectedRoute path="/summary" component={EnhancedTable} />
                   <ProtectedRoute path="/tools" component={EnhancedTable} />
+                  <ProtectedRoute path="/orders" component={EnhancedTable} />
+                  <ProtectedRoute
+                    path="/calculator"
+                    component={EnhancedTable}
+                  />
                 </Switch>
               </Fragment>
             </Router>
