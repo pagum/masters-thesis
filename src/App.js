@@ -9,8 +9,9 @@ import './App.css';
 import LoginPage from './AuthModule/LoginPage';
 import ProtectedRoute from './utils/ProtectedRoute/ProtectedRoute';
 import MenuAppBar from './MenuAppBar/MenuAppBar';
-import EnhancedTable from './Summary/Summary';
 import AuthProvider from './utils/ProtectedRoute/AuthContext';
+import ToolsTable from './Tools/Tools';
+import About from './About/About';
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -32,14 +33,11 @@ class App extends Component {
                 <MenuAppBar />
                 <Switch>
                   <Route exact path="/" component={LoginPage} />
-                  <Route path="/about" component={EnhancedTable} />
-                  <ProtectedRoute path="/summary" component={EnhancedTable} />
-                  <ProtectedRoute path="/tools" component={EnhancedTable} />
-                  <ProtectedRoute path="/orders" component={EnhancedTable} />
-                  <ProtectedRoute
-                    path="/calculator"
-                    component={EnhancedTable}
-                  />
+                  <Route path="/about" component={About} />
+                  <Route path="/summary" component={About} />
+                  <Route path="/tools" component={ToolsTable} />
+                  <Route path="/orders" component={About} />
+                  <Route path="/calculator" component={About} />
                 </Switch>
               </Fragment>
             </Router>
