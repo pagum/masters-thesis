@@ -5,7 +5,7 @@ import chalk from 'chalk';
 import jwt from 'jsonwebtoken';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
-import getAllTools from './Tools/tools.controller';
+import { getAllTools, deleteTool } from './Tools/tools.controller';
 
 const hostname = 'localhost';
 const port = 4000;
@@ -61,7 +61,16 @@ app.get('/tools', async (req, res) => {
   const tools = await getAllTools();
   res.send(tools);
 });
-
+app.delete('/deleteTool/:toolId', async (req, res) => {
+  try {
+    const { toolId } = req.params;
+    const deleteTool = await deleteTool(toolId);
+    res.send(deleteTool);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+});
 //==========================================
 app.listen(process.env.PORT || port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);

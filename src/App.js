@@ -7,10 +7,9 @@ import { history } from './history';
 import { store } from './store';
 import './App.css';
 import LoginPage from './AuthModule/LoginPage';
-import ProtectedRoute from './utils/ProtectedRoute/ProtectedRoute';
 import MenuAppBar from './MenuAppBar/MenuAppBar';
 import AuthProvider from './utils/ProtectedRoute/AuthContext';
-import ToolsTable from './Tools/Tools';
+import Table from './Tools/Table';
 import About from './About/About';
 const theme = createMuiTheme({
   palette: {
@@ -35,7 +34,7 @@ class App extends Component {
                   <Route exact path="/" component={LoginPage} />
                   <Route path="/about" component={About} />
                   <Route path="/summary" component={About} />
-                  <Route path="/tools" component={ToolsTable} />
+                  <Route path="/tools" component={Table} />
                   <Route path="/orders" component={About} />
                   <Route path="/calculator" component={About} />
                 </Switch>

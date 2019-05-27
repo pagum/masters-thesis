@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 
 const toolSchema = new mongoose.Schema({
-  _id: Number,
   name: {
     type: String,
     required: true,
