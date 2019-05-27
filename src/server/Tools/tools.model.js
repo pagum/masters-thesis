@@ -39,7 +39,7 @@ const toolSchema = new mongoose.Schema({
     unique: true,
   },
 });
-const schema = 'tool';
+const schema = 'tools';
 const Tool = mongoose.model(schema, toolSchema, schema);
 
 export default Tool;

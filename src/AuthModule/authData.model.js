@@ -3,8 +3,8 @@ import StorageService from '../utils/StorageService';
 import { push } from 'react-router-redux';
 import { dispatch } from '../store';
 
-import Api from '../utils/authApi';
 import { clearHistoryState } from '../history';
+import Api from '../utils/authApi';
 
 export const authData = {
   state: { isAuth: false },
@@ -29,6 +29,7 @@ export const authData = {
         remember: payload.remember,
       }).then(await Api.init());
       this.onSetIsAuth();
+      await dispatch.toolsModel.fetchAllTools();
       dispatch(push('/summary'));
     },
     logoutUser(payload) {
