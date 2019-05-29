@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 
 export const PaperWrapper = styled(Paper)`
   width: 98% !important;
-  margin: 0 auto !important;
+  margin: 10px auto !important;
 `;
 
 export const IconWrapper = styled.div`

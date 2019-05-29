@@ -64,8 +64,8 @@ app.get('/tools', async (req, res) => {
 app.delete('/deleteTool/:toolId', async (req, res) => {
   try {
     const { toolId } = req.params;
-    const deleteTool = await deleteTool(toolId);
-    res.send(deleteTool);
+    const data = await deleteTool(toolId);
+    res.send(data);
   } catch (error) {
     console.log(error);
     res.status(400).json(error);

@@ -3,7 +3,6 @@ const StorageService = {
     new Promise((resolve, reject) => {
       const localValue = localStorage.getItem(key);
       const sessionValue = sessionStorage.getItem(key);
-      console.log(localValue, sessionValue);
       try {
         if (localValue) {
           resolve(JSON.parse(localValue));

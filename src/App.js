@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import { history } from './history';
-import { store } from './store';
+import { store, dispatch } from './store';
 import './App.css';
 import LoginPage from './AuthModule/LoginPage';
 import MenuAppBar from './MenuAppBar/MenuAppBar';

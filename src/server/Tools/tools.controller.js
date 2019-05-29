@@ -8,6 +8,8 @@ export const getAllTools = async () => {
 };
 
 export const deleteTool = async toolId => {
+  console.log(toolId);
+  console.log(!ObjectId.isValid(toolId));
   if (!ObjectId.isValid(toolId)) {
     throw new ApiError({
       status: 400,

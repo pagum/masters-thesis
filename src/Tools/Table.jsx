@@ -2,13 +2,13 @@ import React from 'react';
 
 import * as R from 'ramda';
 import { connect } from 'react-redux';
-import { select } from '../store';
+import { select, dispatch } from '../store';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+
+import IconButton from '@material-ui/core/IconButton';
 import Checkbox from '@material-ui/core/Checkbox';
 import EnhancedTableHead from './TableHeader';
 import EnhancedTableToolbar from './TableToolbar';
@@ -46,21 +46,22 @@ function getSorting(order, orderBy) {
 class EnhancedTable extends React.Component {
   state = {
     order: 'asc',
-    orderBy: '',
     selected: [],
-
+    orderBy: 'Name',
     page: 0,
     rowsPerPage: 5,
   };
 
   handleRequestSort = (event, property) => {
-    const orderBy = property;
+    const orderBy = event.target.textContent.toLowerCase();
     let order = 'desc';
 
-    if (this.state.orderBy === property && this.state.order === 'desc') {
+    if (
+      this.state.orderBy === event.target.textContent.toLowerCase() &&
+      this.state.order === 'desc'
+    ) {
       order = 'asc';
     }
-
     this.setState({ order, orderBy });
   };
 
@@ -105,19 +106,19 @@ class EnhancedTable extends React.Component {
   addToOrder = event => {
     const { toOrder } = this.state;
     const id = Number(event.target.value);
-    console.log(event.target.value);
     const newToOrder = this.isSelected(id)
       ? R.without([id], toOrder)
       : R.append(id, toOrder);
 
-    console.log(this.isSelected(id));
-    console.log(newToOrder);
     this.setState({ toOrder: newToOrder });
   };
+  deleteSelectedTool = async toolId => {
+    await this.props.deleteTool(toolId);
+  };
   render() {
-    const { data } = this.props;
+    const { data, deleteTool } = this.props;
     const { order, orderBy, selected, rowsPerPage, page } = this.state;
-    console.log(data);
+
     return (
       <PaperWrapper>
         <EnhancedTableToolbar numSelected={selected.length} />
@@ -148,8 +149,15 @@ class EnhancedTable extends React.Component {
                     >
                       <SmallerTableCell>
                         <IconWrapper>
-                          <DeleteIcon />
-                          <EditIcon />
+                          <IconButton
+                            value={row._id}
+                            onClick={e => this.deleteSelectedTool(row._id)}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                          <IconButton>
+                            <EditIcon />
+                          </IconButton>
                         </IconWrapper>
                       </SmallerTableCell>
 
@@ -211,4 +219,10 @@ class EnhancedTable extends React.Component {
 const mapState = state => ({
   data: select.toolsModel.getToolsState(state),
 });
-export default connect(mapState)(EnhancedTable);
+const mapDispatch = dispatch => ({
+  deleteTool: dispatch.toolsModel.deleteTool,
+});
+export default connect(
+  mapState,
+  mapDispatch,
+)(EnhancedTable);
