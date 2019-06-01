@@ -2,7 +2,7 @@ import React from 'react';
 
 import * as R from 'ramda';
 import { connect } from 'react-redux';
-import { select, dispatch } from '../store';
+import { select } from '../store';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TablePagination from '@material-ui/core/TablePagination';
@@ -16,6 +16,7 @@ import { header } from './data';
 import { IconWrapper, SmallerTableCell, PaperWrapper } from './Tools.style';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import ToolForm from './ToolForm';
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -50,6 +51,7 @@ class EnhancedTable extends React.Component {
     orderBy: 'Name',
     page: 0,
     rowsPerPage: 5,
+    isDialogOpen: false,
   };
 
   handleRequestSort = (event, property) => {
@@ -115,13 +117,20 @@ class EnhancedTable extends React.Component {
   deleteSelectedTool = async toolId => {
     await this.props.deleteTool(toolId);
   };
+  toggleDialog = () => {
+    const newDialogState = !this.state.isDialogOpen;
+    this.setState({ isDialogOpen: newDialogState });
+  };
   render() {
-    const { data, deleteTool } = this.props;
+    const { data } = this.props;
     const { order, orderBy, selected, rowsPerPage, page } = this.state;
 
     return (
       <PaperWrapper>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar
+          numSelected={selected.length}
+          toggleDialog={this.toggleDialog}
+        />
         <div>
           <Table aria-labelledby="tableTitle">
             <EnhancedTableHead

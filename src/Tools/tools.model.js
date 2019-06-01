@@ -1,4 +1,4 @@
-import { getTools, deleteTool } from './tools.api';
+import { getTools, deleteTool, addTool } from './tools.api';
 
 export const toolsModel = {
   state: {},
@@ -10,13 +10,17 @@ export const toolsModel = {
   effects: {
     async fetchAllTools() {
       const { data } = await getTools();
-      console.log(data);
+
       this.onSetAllTools(data);
     },
     async deleteTool(toolId) {
-      console.log(toolId);
       const { data } = await deleteTool(toolId);
-      console.log(data);
+
+      await this.fetchAllTools();
+    },
+    async saveTool(tool) {
+      const { data } = await addTool(tool);
+
       await this.fetchAllTools();
     },
   },

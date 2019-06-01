@@ -16,6 +16,13 @@ export const deleteTool = async toolId => {
       msg: 'Invalid param',
     });
   }
-  const config = await Tool.findByIdAndRemove(toolId);
-  return config;
+  const tool = await Tool.findByIdAndRemove(toolId);
+  return tool;
+};
+export const addTool = async newTool => {
+  console.log(newTool);
+
+  const tool = await Tool.create(newTool);
+  console.log(tool);
+  return tool;
 };

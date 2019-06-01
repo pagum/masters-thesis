@@ -56,3 +56,122 @@ export const header = [
 //     },
 //   ],
 // };
+
+export const infoFields = [
+  {
+    label: 'Name',
+    required: true,
+    type: 'input',
+  },
+  {
+    label: 'Application',
+    required: true,
+    type: 'dropdown',
+  },
+  {
+    label: 'Producent',
+    required: true,
+    type: 'input',
+  },
+  {
+    label: 'Location',
+    required: true,
+    type: 'input',
+  },
+  {
+    label: 'Units',
+    required: false,
+    type: 'input',
+  },
+  {
+    label: 'Upload image',
+    required: false,
+    type: 'button',
+  },
+];
+
+export const paramFields = [
+  {
+    label: 'Type',
+    required: true,
+    type: 'input',
+  },
+  {
+    label: 'Active angle',
+    required: true,
+    type: 'input',
+  },
+  {
+    label: 'Clereance angle',
+    required: true,
+    type: 'input',
+  },
+  {
+    label: 'Insert thickness',
+    required: true,
+    type: 'input',
+  },
+  {
+    label: 'Length',
+    required: true,
+    type: 'input',
+  },
+  {
+    label: 'Radius of cutting edge',
+    required: true,
+    type: 'input',
+  },
+  {
+    label: 'Hole diameter',
+    required: true,
+    type: 'input',
+  },
+  {
+    label: 'Cutting-edge life',
+    required: true,
+    type: 'input',
+  },
+  {
+    label: 'Count of segments',
+    required: true,
+    type: 'input',
+  },
+  {
+    label: 'Tolerance',
+    required: true,
+    type: 'input',
+  },
+  {
+    label: 'Protective counterink',
+    required: true,
+    type: 'input',
+  },
+];
+
+export const techFields = [
+  {
+    label: 'Condition',
+    required: false,
+    type: 'dropdownlist',
+  },
+  {
+    label: 'Time of being used',
+    required: false,
+    type: 'input',
+  },
+  {
+    label: 'Bought',
+    required: false,
+    type: 'input',
+  },
+  {
+    label: 'Overhaul',
+    required: false,
+    type: 'input',
+  },
+  {
+    label: 'Price',
+    required: false,
+    type: 'input',
+  },
+];

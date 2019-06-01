@@ -5,7 +5,7 @@ import chalk from 'chalk';
 import jwt from 'jsonwebtoken';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
-import { getAllTools, deleteTool } from './Tools/tools.controller';
+import { getAllTools, deleteTool, addTool } from './Tools/tools.controller';
 
 const hostname = 'localhost';
 const port = 4000;
@@ -61,6 +61,16 @@ app.get('/tools', async (req, res) => {
   const tools = await getAllTools();
   res.send(tools);
 });
+app.post('/addTool', async (req, res) => {
+  try {
+    const data = await addTool(req.body);
+    res.send(data);
+  } catch (error) {
+    console.error(error);
+    res.status(400).json(error);
+  }
+});
+
 app.delete('/deleteTool/:toolId', async (req, res) => {
   try {
     const { toolId } = req.params;

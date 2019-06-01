@@ -7,11 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
-import SearchIcon from '@material-ui/icons/Search';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import FormControl from '@material-ui/core/FormControl';
+
+import ToolForm from './ToolForm';
 
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 
@@ -55,9 +52,13 @@ const EnhancedTableToolbar = props => {
             {numSelected} selected
           </Typography>
         ) : (
-          <Typography variant="h6" id="tableTitle">
-            Tools
-          </Typography>
+          <>
+            <Typography variant="h6" id="tableTitle">
+              Tools
+            </Typography>
+
+            <ToolForm />
+          </>
         )}
       </div>
       <div className={classes.spacer} />
