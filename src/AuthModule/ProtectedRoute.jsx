@@ -4,11 +4,6 @@ import { Route, Redirect } from 'react-router-dom';
 import StorageService from '../utils/StorageService';
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
-  console.log(
-    StorageService.get({
-      key: 'auth-token',
-    }),
-  );
   return (
     <Route
       {...rest}

@@ -8,8 +8,6 @@ export const getAllTools = async () => {
 };
 
 export const deleteTool = async toolId => {
-  console.log(toolId);
-  console.log(!ObjectId.isValid(toolId));
   if (!ObjectId.isValid(toolId)) {
     throw new ApiError({
       status: 400,
@@ -20,9 +18,6 @@ export const deleteTool = async toolId => {
   return tool;
 };
 export const addTool = async newTool => {
-  console.log(newTool);
-
   const tool = await Tool.create(newTool);
-  console.log(tool);
   return tool;
 };

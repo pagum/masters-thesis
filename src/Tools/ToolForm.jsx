@@ -5,10 +5,9 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import Typography from '@material-ui/core/Typography';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import AddIcon from '@material-ui/icons/Add';
-import { infoFields, techFields, paramFields } from './data';
+import ToolStepper from './ToolStepper';
 
 export default class ToolForm extends React.Component {
   state = {
@@ -45,25 +44,8 @@ export default class ToolForm extends React.Component {
               To subscribe to this website, please enter your email address
               here. We will send updates occasionally.
             </DialogContentText>
-            <Typography color="inherit" variant="subtitle1">
-              Information
-            </Typography>
-            {infoFields.map(field => (
-              <FormtField label={field.label} required={field.required} />
-            ))}
-            <Typography color="inherit" variant="subtitle1">
-              Parameters
-            </Typography>
-            {paramFields.map(field => (
-              <FormtField label={field.label} required={field.required} />
-            ))}
 
-            <Typography color="inherit" variant="subtitle1">
-              Technical condition
-            </Typography>
-            {techFields.map(field => (
-              <FormtField label={field.label} required={field.required} />
-            ))}
+            <ToolStepper />
           </DialogContent>
 
           <DialogActions>

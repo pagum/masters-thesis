@@ -8,6 +8,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
+import { TextField } from '@material-ui/core';
 
 const styles = theme => ({
   container: {
@@ -19,31 +20,27 @@ const styles = theme => ({
   },
 });
 
-class FormtField extends React.Component {
-  state = {
-    name: '',
-  };
-
-  componentDidMount() {
-    this.forceUpdate();
+class FormField extends React.Component {
+  state = {};
+  shouldComponentUpdate(nextProps) {
+    return nextProps.value !== this.props.value;
   }
-
-  handleChange = event => {
-    this.setState({ name: event.target.value });
-  };
-
   render() {
-    const { label, required } = this.props;
+    const { label, name, required, handleEdit, value } = this.props;
 
     return (
       <div>
         <FormControl required={required}>
           <InputLabel>{label}</InputLabel>
-          <Input value={this.state.name} onChange={this.handleChange} />
+          <Input
+            onKeyUp={e => (
+              console.log(name, e.target), handleEdit(name, e.target.value)
+            )}
+          />
         </FormControl>
       </div>
     );
   }
 }
 
-export default withStyles(styles)(FormtField);
+export default withStyles(styles)(FormField);

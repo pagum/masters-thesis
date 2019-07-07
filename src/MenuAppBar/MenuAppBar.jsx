@@ -33,10 +33,7 @@ class MenuAppBar extends React.Component {
   };
 
   handleChange = value => {
-    console.log(value);
-
     this.props.history.push(`/${value}`);
-    console.log(this.props.history);
   };
 
   goTo = website => {
