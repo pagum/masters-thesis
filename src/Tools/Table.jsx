@@ -108,6 +108,7 @@ class EnhancedTable extends React.Component {
   addToOrder = event => {
     const { toOrder } = this.state;
     const id = Number(event.target.value);
+    console.log(event.target.value);
     const newToOrder = this.isSelected(id)
       ? R.without([id], toOrder)
       : R.append(id, toOrder);
@@ -117,6 +118,10 @@ class EnhancedTable extends React.Component {
   deleteSelectedTool = async toolId => {
     await this.props.deleteTool(toolId);
   };
+  editSelectedTool = async toolId => {
+    await this.props.fetchToolById(toolId);
+  };
+
   toggleDialog = () => {
     const newDialogState = !this.state.isDialogOpen;
     this.setState({ isDialogOpen: newDialogState });
@@ -128,6 +133,7 @@ class EnhancedTable extends React.Component {
     return (
       <PaperWrapper>
         <EnhancedTableToolbar
+          selectedItems={selected}
           numSelected={selected.length}
           toggleDialog={this.toggleDialog}
         />
@@ -146,14 +152,18 @@ class EnhancedTable extends React.Component {
               {stableSort(data, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(row => {
-                  const isSelected = this.isSelected(row.id);
+                  const {
+                    info: { name, application, producent, location, units },
+                  } = row;
+                  const isSelected = this.isSelected(row._id);
+                  console.log(row);
                   return (
                     <TableRow
                       hover
                       role="checkbox"
                       aria-checked={isSelected}
                       tabIndex={-1}
-                      key={row.id}
+                      key={row._id}
                       selected={isSelected}
                     >
                       <SmallerTableCell>
@@ -164,38 +174,35 @@ class EnhancedTable extends React.Component {
                           >
                             <DeleteIcon />
                           </IconButton>
-                          <IconButton>
+                          <IconButton
+                            value={row._id}
+                            onClick={e => this.editSelectedTool(row._id)}
+                          >
                             <EditIcon />
                           </IconButton>
                         </IconWrapper>
                       </SmallerTableCell>
 
                       <SmallerTableCell component="th" scope="row">
-                        {row.name}
+                        {name}
                       </SmallerTableCell>
                       <SmallerTableCell align="right">
-                        {row.application}
+                        {application}
                       </SmallerTableCell>
                       <SmallerTableCell align="right">
-                        {row.producent}
+                        {producent}
                       </SmallerTableCell>
                       <SmallerTableCell align="right">
-                        {row.code}
+                        {location}
                       </SmallerTableCell>
-                      <SmallerTableCell align="right">
-                        {row.location}
-                      </SmallerTableCell>
-                      <SmallerTableCell align="right">
-                        {row.units}
-                      </SmallerTableCell>
-                      <SmallerTableCell align="right">
-                        {row.notes}
-                      </SmallerTableCell>
+                      <SmallerTableCell align="right">{units}</SmallerTableCell>
+
                       <SmallerTableCell padding="checkbox">
                         <Checkbox
-                          value={row.id}
+                          // color={'#5e76a3'}
+                          value={row._id}
                           onClick={event => (
-                            this.handleClick(event, row.id), this.addToOrder
+                            this.handleClick(event, row._id), this.addToOrder
                           )}
                         />
                       </SmallerTableCell>
@@ -230,6 +237,7 @@ const mapState = state => ({
 });
 const mapDispatch = dispatch => ({
   deleteTool: dispatch.toolsModel.deleteTool,
+  fetchToolById: dispatch.toolsModel.fetchToolById,
 });
 export default connect(
   mapState,

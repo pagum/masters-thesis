@@ -1,8 +1,6 @@
 import mongoose from 'mongoose';
 
-const ObjectId = mongoose.Schema.Types.ObjectId;
 const toolTypeSchema = new mongoose.Schema({
-  _id: ObjectId,
   name: {
     type: String,
     required: true,

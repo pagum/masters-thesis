@@ -26,17 +26,20 @@ class FormField extends React.Component {
     return nextProps.value !== this.props.value;
   }
   render() {
-    const { label, name, required, handleEdit, value } = this.props;
+    const { label, name, required, handleEdit, type, error } = this.props;
 
     return (
       <div>
         <FormControl required={required}>
           <InputLabel>{label}</InputLabel>
           <Input
+            type={type || 'text'}
             onKeyUp={e => (
               console.log(name, e.target), handleEdit(name, e.target.value)
             )}
           />
+
+          <FormHelperText error={error} />
         </FormControl>
       </div>
     );

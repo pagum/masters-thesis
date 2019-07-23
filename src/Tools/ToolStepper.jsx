@@ -1,5 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
+
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -10,6 +12,7 @@ import FormField from '../common/components/FormField';
 
 import SelectComponent from '../common/components/Select';
 import { infoFields, techFields, paramFields } from './data';
+import { FormGridWrapper, GridContent } from './Tools.style';
 
 const styles = theme => ({
   root: {
@@ -42,86 +45,114 @@ class ToolStepper extends React.Component {
     switch (step) {
       case 0:
         return (
-          <div>
+          <FormGridWrapper>
             {infoFields.map(field => {
               if (field.type === 'input') {
                 return (
-                  <FormField
-                    key={field.name}
-                    name={field.name}
-                    label={field.label}
-                    value={this.state[field.name]}
-                    required={field.required}
-                    handleEdit={this.onTextFieldChange}
-                  />
+                  <GridContent>
+                    <FormField
+                      type={field.dataType}
+                      key={field.name}
+                      name={field.name}
+                      label={field.label}
+                      value={this.state[field.name]}
+                      required={field.required}
+                      handleEdit={this.onTextFieldChange}
+                    />
+                  </GridContent>
                 );
               }
               if (field.type === 'dropdown') {
                 return (
-                  <SelectComponent
-                    label={field.label}
-                    name={field.name}
-                    value={this.state[field.name]}
-                    menuItems={field.menuItems}
-                    handleEdit={this.onTextFieldChange}
-                  />
+                  <GridContent>
+                    <SelectComponent
+                      label={field.label}
+                      name={field.name}
+                      value={this.state[field.name]}
+                      menuItems={field.menuItems}
+                      handleEdit={this.onTextFieldChange}
+                      required={field.required}
+                    />
+                  </GridContent>
                 );
               }
               if (field.type === 'button') {
-                return <Button>{field.label}</Button>;
+                return (
+                  <GridContent>
+                    <Button>{field.label}</Button>
+                  </GridContent>
+                );
               }
             })}
-          </div>
+          </FormGridWrapper>
         );
       case 1:
-        return params.map(field => {
-          return (
-            <FormField
-              key={field.name}
-              name={field.name}
-              label={field.label}
-              value={this.state[field.name]}
-              required={field.required}
-              handleEdit={this.onTextFieldChange}
-            />
-          );
-        });
+        return (
+          <FormGridWrapper>
+            {params.map(field => (
+              <GridContent>
+                <FormField
+                  type={field.dataType}
+                  key={field.name}
+                  name={field.name}
+                  label={field.label}
+                  value={this.state[field.name]}
+                  required={field.required}
+                  handleEdit={this.onTextFieldChange}
+                />
+              </GridContent>
+            ))}
+          </FormGridWrapper>
+        );
       case 2:
-        return techFields.map(field => {
-          if (field.type === 'input') {
-            return (
-              <FormField
-                key={field.name}
-                name={field.name}
-                label={field.label}
-                value={this.state[field.name]}
-                required={field.required}
-                handleEdit={this.onTextFieldChange}
-              />
-            );
-          }
-          if (field.type === 'dropdown') {
-            return (
-              <SelectComponent
-                label={field.label}
-                name={field.name}
-                value={this.state[field.name]}
-                menuItems={field.menuItems}
-                handleEdit={this.onTextFieldChange}
-              />
-            );
-          }
-          if (field.type === 'button') {
-            return <Button>{field.label}</Button>;
-          }
-        });
+        return (
+          <FormGridWrapper>
+            {techFields.map(field => {
+              if (field.type === 'input') {
+                return (
+                  <GridContent>
+                    <FormField
+                      type={field.dataType}
+                      key={field.name}
+                      name={field.name}
+                      label={field.label}
+                      value={this.state[field.name]}
+                      required={field.required}
+                      handleEdit={this.onTextFieldChange}
+                    />
+                  </GridContent>
+                );
+              }
+              if (field.type === 'dropdown') {
+                return (
+                  <GridContent>
+                    <SelectComponent
+                      label={field.label}
+                      name={field.name}
+                      value={this.state[field.name]}
+                      menuItems={field.menuItems}
+                      handleEdit={this.onTextFieldChange}
+                      required={field.required}
+                    />
+                  </GridContent>
+                );
+              }
+              if (field.type === 'button') {
+                return (
+                  <GridContent>
+                    <Button>{field.label}</Button>
+                  </GridContent>
+                );
+              }
+            })}
+          </FormGridWrapper>
+        );
 
       default:
         return 'Unknown step';
     }
   }
   onTextFieldChange = (name, value) => {
-    console.log(name, value);
     this.setState({
       [name]: value,
     });
@@ -132,15 +163,17 @@ class ToolStepper extends React.Component {
   handleNext = () => {
     const { activeStep } = this.state;
     let { skipped } = this.state;
-    if (this.isStepSkipped(activeStep)) {
-      skipped = new Set(skipped.values());
-      skipped.delete(activeStep);
-    }
     console.log(this.state);
+    console.log(infoFields);
+    const step = this.getSteps();
+    console.log(activeStep, step.length);
     this.setState({
       activeStep: activeStep + 1,
       skipped,
     });
+  };
+  handleFinish = () => {
+    console.log(this.state);
   };
 
   handleBack = () => {
@@ -172,16 +205,76 @@ class ToolStepper extends React.Component {
       activeStep: 0,
     });
   };
+  handleSubmit = () => {
+    console.log(this.state);
+    const {
+      activeAngle,
+      application,
+      bought,
+      clearanceAngle,
+      condition,
+      countOfSegments,
+      cuttingEdgeLife,
+      holeDiameter,
+      inscribedCircle,
+      insertThickness,
+      length,
+      location,
+      name,
+      overhaul,
+      price,
+      producent,
+      protectiveCounterink,
+      radiusOfCuttingEdge,
+      timeOfBeingUsed,
+      units,
+    } = this.state;
+    const newTool = {
+      technicalConditions: {
+        condition,
+        timeOfBeingUsed,
+        bought,
+        overhaul,
+        price: Number(price),
+      },
+      info: {
+        application,
+        location,
+        name,
+        producent,
+        units: Number(units),
+      },
+      type: { name: application },
+      parameters: [],
+    };
+    console.log(this.state);
+    this.props.saveTool(newTool);
+  };
 
   isStepSkipped(step) {
     return this.state.skipped.has(step);
   }
-
+  isButtonDisbled = steps => {
+    const {
+      activeStep,
+      application,
+      name,
+      price,
+      condition,
+      timeOfBeingUsed,
+    } = this.state;
+    if (activeStep === 0) {
+      return !application || !name;
+    }
+    if (activeStep === steps.length - 1) {
+      return !price || !condition || !timeOfBeingUsed;
+    }
+  };
   render() {
     const { classes } = this.props;
     const steps = this.getSteps();
     const { activeStep } = this.state;
-
+    console.log(!this.state.application || !this.state.name);
     return (
       <div className={classes.root}>
         <Stepper activeStep={activeStep}>
@@ -209,8 +302,9 @@ class ToolStepper extends React.Component {
               <Typography className={classes.instructions}>
                 All steps completed - you&apos;re finished
               </Typography>
-              <Button onClick={this.handleReset} className={classes.button}>
-                Reset
+
+              <Button onClick={this.handleSubmit} className={classes.button}>
+                Submit
               </Button>
             </div>
           ) : (
@@ -226,22 +320,13 @@ class ToolStepper extends React.Component {
                 >
                   Back
                 </Button>
-                {this.isStepOptional(activeStep) && (
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={this.handleSkip}
-                    className={classes.button}
-                  >
-                    Skip
-                  </Button>
-                )}
+
                 <Button
                   variant="contained"
                   color="primary"
                   onClick={this.handleNext}
                   className={classes.button}
-                  disabled={!this.state.application}
+                  disabled={this.isButtonDisbled(steps)}
                 >
                   {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                 </Button>
@@ -254,4 +339,13 @@ class ToolStepper extends React.Component {
   }
 }
 
-export default withStyles(styles)(ToolStepper);
+const mapDispatch = dispatch => ({
+  saveTool: dispatch.toolsModel.saveTool,
+});
+
+export default withStyles(styles)(
+  connect(
+    null,
+    mapDispatch,
+  )(ToolStepper),
+);

@@ -38,7 +38,7 @@ export default class ToolForm extends React.Component {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Tool</DialogTitle>
+          <DialogTitle id="form-dialog-title">New tool</DialogTitle>
           <DialogContent>
             <DialogContentText>
               To subscribe to this website, please enter your email address
@@ -51,9 +51,6 @@ export default class ToolForm extends React.Component {
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
               Cancel
-            </Button>
-            <Button onClick={this.handleClose} color="primary">
-              Subscribe
             </Button>
           </DialogActions>
         </Dialog>

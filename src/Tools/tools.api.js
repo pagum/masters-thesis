@@ -4,8 +4,14 @@ export const getTools = async () => {
   const response = await api.get('/tools');
   return response;
 };
+
+export const getToolById = async toolId => {
+  const response = await api.get(`/tool/${toolId}`);
+  console.log(response);
+  return response;
+};
 export const addTool = async tool => {
-  const response = await api.delete('/addTool', tool);
+  const response = await api.post('/addTool', tool);
   return response;
 };
 

@@ -6,7 +6,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
 
 import ToolForm from './ToolForm';
 
@@ -16,30 +16,28 @@ const toolbarStyles = theme => ({
   root: {
     paddingRight: theme.spacing.unit,
   },
-  highlight:
-    theme.palette.type === 'light'
-      ? {
-          color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-        }
-      : {
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark,
-        },
+  highlight: {
+    color: theme.palette.primary.main,
+    backgroundColor: lighten(theme.palette.primary.main, 0.85),
+  },
+
   spacer: {
     flex: '1 1 100%',
   },
   actions: {
-    color: theme.palette.text.secondary,
+    color: theme.palette.primary.main,
   },
   title: {
     flex: '0 0 auto',
   },
 });
-
+const addToOrder = selectedItems => {
+  console.log(selectedItems);
+};
 const EnhancedTableToolbar = props => {
-  const { numSelected, classes } = props;
-
+  const { classes, selectedItems } = props;
+  console.log(props);
+  const numSelected = selectedItems.length;
   return (
     <Toolbar
       className={classNames(classes.root, {
@@ -64,9 +62,12 @@ const EnhancedTableToolbar = props => {
       <div className={classes.spacer} />
       <div className={classes.actions}>
         {numSelected > 0 && (
-          <Tooltip title="Delete">
-            <IconButton aria-label="Delete">
-              <DeleteIcon />
+          <Tooltip title="Add to order">
+            <IconButton
+              aria-label="Order"
+              onClick={() => addToOrder(selectedItems)}
+            >
+              <AddIcon />
             </IconButton>
           </Tooltip>
         )}

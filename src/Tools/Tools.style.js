@@ -27,3 +27,13 @@ export const SmallerTableCell = styled(TableCell)`
   text-align: center !important;
   padding: 4px !important;
 `;
+
+export const FormGridWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 50% 50%;
+`;
+
+export const GridContent = styled.div`
+  justify-content: center;
+  display: flex;
+`;

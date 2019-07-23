@@ -5,7 +5,12 @@ import chalk from 'chalk';
 import jwt from 'jsonwebtoken';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
-import { getAllTools, deleteTool, addTool } from './Tools/tools.controller';
+import {
+  getAllTools,
+  getToolById,
+  deleteTool,
+  addTool,
+} from './Tools/tools.controller';
 
 const hostname = 'localhost';
 const port = 4000;
@@ -59,6 +64,12 @@ app.post('/auth', async (req, res) => {
 
 app.get('/tools', async (req, res) => {
   const tools = await getAllTools();
+  res.send(tools);
+});
+
+app.get('/tool/:toolId', async (req, res) => {
+  const { toolId } = req.params;
+  const tools = await getToolById(toolId);
   res.send(tools);
 });
 app.post('/addTool', async (req, res) => {

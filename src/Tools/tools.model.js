@@ -1,4 +1,4 @@
-import { getTools, deleteTool, addTool } from './tools.api';
+import { getTools, deleteTool, addTool, getToolById } from './tools.api';
 
 export const toolsModel = {
   state: {},
@@ -12,6 +12,10 @@ export const toolsModel = {
       const { data } = await getTools();
 
       this.onSetAllTools(data);
+    },
+    async fetchToolById(toolId) {
+      const { data } = await getToolById(toolId);
+      console.log(data);
     },
     async deleteTool(toolId) {
       const { data } = await deleteTool(toolId);
