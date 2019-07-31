@@ -11,6 +11,7 @@ const StyledFormControl = styled(FormControl)`
 class SelectComponent extends React.Component {
   state = {};
   handleChange = (event, name) => {
+    console.log(name, event.target.value);
     this.setState({ [name]: event.target.value });
   };
   componentDidMount() {
@@ -21,7 +22,7 @@ class SelectComponent extends React.Component {
     const { label, menuItems, handleEdit, name, required, value } = this.props;
 
     return (
-      <StyledFormControl required>
+      <StyledFormControl required={required}>
         <InputLabel>{label}</InputLabel>
         <Select
           value={value}

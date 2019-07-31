@@ -153,6 +153,7 @@ class ToolStepper extends React.Component {
     }
   }
   onTextFieldChange = (name, value) => {
+    console.log(name, value);
     this.setState({
       [name]: value,
     });
@@ -235,7 +236,6 @@ class ToolStepper extends React.Component {
         timeOfBeingUsed,
         bought,
         overhaul,
-        price: Number(price),
       },
       info: {
         application,
@@ -243,11 +243,26 @@ class ToolStepper extends React.Component {
         name,
         producent,
         units: Number(units),
+        price: Number(price),
       },
       type: { name: application },
-      parameters: [],
+      parameters: [
+        {
+          name: 'countOfSegments',
+          value: Number(countOfSegments),
+        },
+        { name: 'cuttingEdgeLife', value: Number(cuttingEdgeLife) },
+        { name: 'holeDiameter', value: Number(holeDiameter) },
+        { name: 'inscribedCircle', value: Number(inscribedCircle) },
+        { name: 'insertThickness', value: Number(insertThickness) },
+        { name: 'length', value: Number(length) },
+        { name: 'activeAngle', value: Number(activeAngle) },
+        { name: 'protectiveCounterink', value: Number(protectiveCounterink) },
+        { name: 'radiusOfCuttingEdge', value: Number(radiusOfCuttingEdge) },
+        { name: 'clearanceAngle', value: Number(clearanceAngle) },
+      ],
     };
-    console.log(this.state);
+    console.log(newTool);
     this.props.saveTool(newTool);
   };
 

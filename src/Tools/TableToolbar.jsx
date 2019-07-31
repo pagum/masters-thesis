@@ -31,13 +31,15 @@ const toolbarStyles = theme => ({
     flex: '0 0 auto',
   },
 });
-const addToOrder = selectedItems => {
-  console.log(selectedItems);
-};
+
 const EnhancedTableToolbar = props => {
-  const { classes, selectedItems } = props;
+  const { classes, selectedItems, createToolList } = props;
   console.log(props);
   const numSelected = selectedItems.length;
+  const addToOrder = selectedItems => {
+    createToolList(selectedItems);
+    console.log(selectedItems);
+  };
   return (
     <Toolbar
       className={classNames(classes.root, {
@@ -65,7 +67,9 @@ const EnhancedTableToolbar = props => {
           <Tooltip title="Add to order">
             <IconButton
               aria-label="Order"
-              onClick={() => addToOrder(selectedItems)}
+              onClick={() => (
+                addToOrder(selectedItems), console.log('lllllllllll')
+              )}
             >
               <AddIcon />
             </IconButton>

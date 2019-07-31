@@ -127,7 +127,7 @@ class EnhancedTable extends React.Component {
     this.setState({ isDialogOpen: newDialogState });
   };
   render() {
-    const { data } = this.props;
+    const { data, createToolList } = this.props;
     const { order, orderBy, selected, rowsPerPage, page } = this.state;
 
     return (
@@ -136,6 +136,7 @@ class EnhancedTable extends React.Component {
           selectedItems={selected}
           numSelected={selected.length}
           toggleDialog={this.toggleDialog}
+          createToolList={createToolList}
         />
         <div>
           <Table aria-labelledby="tableTitle">
@@ -232,12 +233,16 @@ class EnhancedTable extends React.Component {
   }
 }
 
-const mapState = state => ({
-  data: select.toolsModel.getToolsState(state),
-});
+const mapState = state => {
+  console.log(state);
+  return {
+    data: select.toolsModel.getToolsState(state),
+  };
+};
 const mapDispatch = dispatch => ({
   deleteTool: dispatch.toolsModel.deleteTool,
   fetchToolById: dispatch.toolsModel.fetchToolById,
+  createToolList: dispatch.orderModel.createToolList,
 });
 export default connect(
   mapState,

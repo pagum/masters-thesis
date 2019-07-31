@@ -2,13 +2,12 @@ import mongoose from 'mongoose';
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
 const parameterSchema = new mongoose.Schema({
-  _id: ObjectId,
   name: {
     type: String,
     required: true,
   },
-  defaultValue: {
-    type: String,
+  value: {
+    type: Number,
   },
   unit: {
     type: String,

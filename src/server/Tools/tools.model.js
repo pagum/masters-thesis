@@ -20,10 +20,6 @@ const toolSchema = new mongoose.Schema({
     overhaul: {
       type: String,
     },
-    price: {
-      type: Number,
-      required: true,
-    },
   },
   info: {
     name: {
@@ -41,6 +37,10 @@ const toolSchema = new mongoose.Schema({
       type: String,
     },
     units: {
+      type: Number,
+      required: true,
+    },
+    price: {
       type: Number,
       required: true,
     },

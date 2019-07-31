@@ -12,6 +12,7 @@ import AuthProvider from './utils/ProtectedRoute/AuthContext';
 import Table from './Tools/Table';
 import About from './About/About';
 import Calculator from './Calculator/Calculator';
+import Order from './Orders/Order';
 
 const theme = createMuiTheme({
   palette: {
@@ -37,7 +38,7 @@ class App extends Component {
                   <Route path="/about" component={About} />
                   <Route path="/summary" component={About} />
                   <Route path="/tools" component={Table} />
-                  <Route path="/orders" component={About} />
+                  <Route path="/orders" component={Order} />
                   <Route path="/calculator" component={Calculator} />
                 </Switch>
               </Fragment>

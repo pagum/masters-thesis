@@ -3,12 +3,14 @@ import { routerMiddleware, routerReducer } from 'react-router-redux';
 import selectPlugin from '@rematch/select';
 import { authData } from './AuthModule/authData.model';
 import { toolsModel } from './Tools/tools.model';
+import { orderModel } from './Orders/order.model';
 
 import { history } from './history';
 
 const models = {
   authData,
   toolsModel,
+  orderModel,
 };
 const selectors = selectPlugin();
 export const store = rematch.init({

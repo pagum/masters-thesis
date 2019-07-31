@@ -87,6 +87,13 @@ export const infoFields = [
     dataType: 'number',
   },
   {
+    label: 'Price',
+    name: 'price',
+    required: true,
+    type: 'input',
+    dataType: 'number',
+  },
+  {
     label: 'Upload image',
     name: 'uploadImage',
     required: false,
@@ -120,13 +127,6 @@ export const techFields = [
     name: 'overhaul',
     required: false,
     type: 'input',
-  },
-  {
-    label: 'Price',
-    name: 'price',
-    required: true,
-    type: 'input',
-    dataType: 'number',
   },
 ];
 
