@@ -4,6 +4,7 @@ import * as R from 'ramda';
 import { connect } from 'react-redux';
 import { select } from '../store';
 import NewOrderTable from './NewOrderTable';
+import NewOrder from './NewOrder';
 
 class EnhancedTable extends React.Component {
   state = {
@@ -90,7 +91,7 @@ class EnhancedTable extends React.Component {
   render() {
     const { newOrderList } = this.props;
     console.log(newOrderList);
-    return <NewOrderTable newOrderList={newOrderList} />;
+    return <NewOrder newOrderList={newOrderList} />;
   }
 }
 

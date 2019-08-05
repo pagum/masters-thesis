@@ -25,6 +25,7 @@ const toolSchema = new mongoose.Schema({
     name: {
       type: String,
       required: true,
+      unique: true,
     },
     application: {
       type: String,
