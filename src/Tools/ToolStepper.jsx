@@ -153,7 +153,6 @@ class ToolStepper extends React.Component {
     }
   }
   onTextFieldChange = (name, value) => {
-    console.log(name, value);
     this.setState({
       [name]: value,
     });
@@ -164,10 +163,7 @@ class ToolStepper extends React.Component {
   handleNext = () => {
     const { activeStep } = this.state;
     let { skipped } = this.state;
-    console.log(this.state);
-    console.log(infoFields);
     const step = this.getSteps();
-    console.log(activeStep, step.length);
     this.setState({
       activeStep: activeStep + 1,
       skipped,
@@ -207,7 +203,6 @@ class ToolStepper extends React.Component {
     });
   };
   handleSubmit = () => {
-    console.log(this.state);
     const {
       activeAngle,
       application,
@@ -262,7 +257,6 @@ class ToolStepper extends React.Component {
         { name: 'clearanceAngle', value: Number(clearanceAngle) },
       ],
     };
-    console.log(newTool);
     this.props.saveTool(newTool);
   };
 
@@ -289,7 +283,6 @@ class ToolStepper extends React.Component {
     const { classes } = this.props;
     const steps = this.getSteps();
     const { activeStep } = this.state;
-    console.log(!this.state.application || !this.state.name);
     return (
       <div className={classes.root}>
         <Stepper activeStep={activeStep}>

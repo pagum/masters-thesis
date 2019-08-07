@@ -4,18 +4,33 @@ import * as R from 'ramda';
 import { connect } from 'react-redux';
 import { select } from '../store';
 import NewOrderTable from './NewOrderTable';
-import NewOrder from './NewOrder';
+import PreviousOrders from './PreviousOrders';
+import { OrderWrapper } from './Orders.style';
 
-class EnhancedTable extends React.Component {
+class EnhancedTable extends React.PureComponent {
   state = {
-    order: 'asc',
+    orders: [],
     selected: [],
     orderBy: 'Name',
     page: 0,
     rowsPerPage: 5,
     isDialogOpen: false,
   };
+  componentDidMount = async () => {
+    console.log(this.props);
+    const orders = await this.props.getAllOrders();
+    orders && this.setState({ ...this.state, orders });
+  };
+  // shouldComponentUpdate = () => {};
 
+  // componentDidUpdate = async (prevProps, prevState) => {
+  //   console.log(prevState);
+  //   console.log(this.state);
+  //   if (prevState.orders.length !== this.state.orders.length) {
+  //     const orders = await this.props.getAllOrders();
+  //     this.setState({ ...this.state, orders });
+  //   }
+  // };
   handleRequestSort = (event, property) => {
     const orderBy = event.target.textContent.toLowerCase();
     let order = 'desc';
@@ -67,6 +82,7 @@ class EnhancedTable extends React.Component {
   };
 
   isSelected = id => this.state.selected.indexOf(id) !== -1;
+
   addToOrder = event => {
     const { toOrder } = this.state;
     const id = Number(event.target.value);
@@ -89,19 +105,37 @@ class EnhancedTable extends React.Component {
     this.setState({ isDialogOpen: newDialogState });
   };
   render() {
-    const { newOrderList } = this.props;
-    console.log(newOrderList);
-    return <NewOrder newOrderList={newOrderList} />;
+    const { newOrderList, deleteOrder, getOrder, orders } = this.props;
+
+    console.log(this.state);
+    return (
+      <OrderWrapper>
+        <NewOrderTable newOrderList={newOrderList} />
+        <PreviousOrders
+          orders={orders || []}
+          deleteOrder={deleteOrder}
+          downloadOrder={getOrder}
+        />
+      </OrderWrapper>
+    );
   }
 }
 
-const mapState = state => ({
-  newOrderList: select.orderModel.getNewOrderList(state),
-});
+const mapState = state => {
+  console.log(select.orderModel.getPreviousOrders(state));
+  return {
+    newOrderList: select.orderModel.getNewOrderList(state),
+    orders: select.orderModel.getPreviousOrders(state),
+  };
+};
+
 const mapDispatch = dispatch => ({
   deleteTool: dispatch.toolsModel.deleteTool,
   fetchToolById: dispatch.toolsModel.fetchToolById,
   createToolList: dispatch.orderModel.createToolList,
+  getAllOrders: dispatch.orderModel.getAllOrders,
+  deleteOrder: dispatch.orderModel.deleteOrder,
+  getOrder: dispatch.orderModel.getOrderById,
 });
 export default connect(
   mapState,

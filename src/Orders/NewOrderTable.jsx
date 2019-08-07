@@ -12,13 +12,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import IconButton from '@material-ui/core/IconButton';
 import NewOrderSummary from './NewOrderSummary';
+import { Typography } from '@material-ui/core';
+import { PaperWrapper, OrderTypography } from './Orders.style';
 
 const menuItems = ['1', '2', '3', '4', ' 5', '6', '7', '8', '9', '10'];
 
 class NewOrderTable extends React.Component {
   state = { newOrderList: [] };
   componentDidMount = async () => {
-    console.log(typeof sessionStorage.getItem('newOrder'));
     if (sessionStorage.getItem('newOrder')) {
       const newOrderList = JSON.parse(sessionStorage.getItem('newOrder')).map(
         async tool => await this.props.fetchToolById(tool),
@@ -50,11 +51,12 @@ class NewOrderTable extends React.Component {
   };
   render() {
     const { newOrderList } = this.state;
-    console.log(this.state);
+    const { createOrder } = this.props;
     return (
-      <Paper>
+      <PaperWrapper>
+        <OrderTypography variant="h6">New order</OrderTypography>
         {newOrderList.length === 0 ? (
-          <div>no items</div>
+          <div>No items added</div>
         ) : (
           <>
             <Table>
@@ -102,15 +104,19 @@ class NewOrderTable extends React.Component {
                 ))}
               </TableBody>
             </Table>{' '}
-            <NewOrderSummary newOrderList={newOrderList} />
+            <NewOrderSummary
+              newOrderList={newOrderList}
+              createOrder={createOrder}
+            />
           </>
         )}
-      </Paper>
+      </PaperWrapper>
     );
   }
 }
 const mapDispatch = dispatch => ({
   fetchToolById: dispatch.toolsModel.fetchToolById,
+  createOrder: dispatch.orderModel.createOrder,
 });
 export default connect(
   null,

@@ -9,7 +9,6 @@ export const getAllTools = async () => {
 };
 
 export const getToolById = async toolId => {
-  console.log('!!!!!!!!!!!!!!!!!!!');
   const tool = await Tool.find({ _id: ObjectId(toolId) });
   return tool[0];
 };
@@ -25,7 +24,6 @@ export const deleteTool = async toolId => {
   return tool;
 };
 export const addTool = async newTool => {
-  console.log(newTool);
   const tool = new Tool(newTool);
   tool.save(err => {
     if (err) console.log(err);

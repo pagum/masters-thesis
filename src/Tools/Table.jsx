@@ -16,7 +16,6 @@ import { header } from './data';
 import { IconWrapper, SmallerTableCell, PaperWrapper } from './Tools.style';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import ToolForm from './ToolForm';
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -108,7 +107,6 @@ class EnhancedTable extends React.Component {
   addToOrder = event => {
     const { toOrder } = this.state;
     const id = Number(event.target.value);
-    console.log(event.target.value);
     const newToOrder = this.isSelected(id)
       ? R.without([id], toOrder)
       : R.append(id, toOrder);
@@ -157,7 +155,7 @@ class EnhancedTable extends React.Component {
                     info: { name, application, producent, location, units },
                   } = row;
                   const isSelected = this.isSelected(row._id);
-                  console.log(row);
+
                   return (
                     <TableRow
                       hover
@@ -234,7 +232,6 @@ class EnhancedTable extends React.Component {
 }
 
 const mapState = state => {
-  console.log(state);
   return {
     data: select.toolsModel.getToolsState(state),
   };

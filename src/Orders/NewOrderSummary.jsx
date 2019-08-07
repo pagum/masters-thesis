@@ -1,6 +1,6 @@
 import React from 'react';
-import { Paper, Button } from '@material-ui/core';
 import { InfoPaper, CostWrapper, SubmitOrderButton } from './Orders.style';
+import { prepareData } from './helpers';
 
 const countSum = arrayOfTools => {
   const toolsWithAmount = arrayOfTools.filter(tool => tool.amount);
@@ -17,8 +17,12 @@ const countSum = arrayOfTools => {
 };
 
 const NewOrderSummary = props => {
-  const totalCost =
-    props.newOrderList.length > 0 ? countSum(props.newOrderList) : null;
+  const { newOrderList, createOrder } = props;
+  const totalCost = newOrderList.length > 0 ? countSum(newOrderList) : null;
+  const makeOrder = () => {
+    const preparedData = prepareData(newOrderList);
+    createOrder(preparedData);
+  };
   return (
     <InfoPaper>
       {totalCost ? (
@@ -30,7 +34,7 @@ const NewOrderSummary = props => {
             <SubmitOrderButton
               variant="outlined"
               color="primary"
-              onClick={() => console.log(props.newOrderList)}
+              onClick={makeOrder}
             >
               Submit order
             </SubmitOrderButton>{' '}

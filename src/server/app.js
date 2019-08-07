@@ -11,6 +11,12 @@ import {
   deleteTool,
   addTool,
 } from './Tools/tools.controller';
+import {
+  addOrder,
+  getAllOrders,
+  deleteOrder,
+  getOrderById,
+} from './Orders/order.controller';
 
 const hostname = 'localhost';
 const port = 4000;
@@ -72,6 +78,7 @@ app.get('/tool/:toolId', async (req, res) => {
   const tools = await getToolById(toolId);
   res.send(tools);
 });
+
 app.post('/addTool', async (req, res) => {
   try {
     const data = await addTool(req.body);
@@ -91,6 +98,37 @@ app.delete('/deleteTool/:toolId', async (req, res) => {
     console.log(error);
     res.status(400).json(error);
   }
+});
+
+app.post('/addOrder', async (req, res) => {
+  try {
+    const data = await addOrder(req.body);
+    res.send(data);
+  } catch (error) {
+    console.error(error);
+    res.status(400).json(error);
+  }
+});
+
+app.get('/orders', async (req, res) => {
+  const orders = await getAllOrders();
+  res.send(orders);
+});
+
+app.delete('/deleteOrder/:orderId', async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const data = await deleteOrder(orderId);
+    res.send(data);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+});
+app.get('/orders/:orderId', async (req, res) => {
+  const { orderId } = req.params;
+  const order = await getOrderById(orderId);
+  res.send(order);
 });
 //==========================================
 app.listen(process.env.PORT || port, hostname, () => {

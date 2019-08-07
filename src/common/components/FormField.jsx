@@ -34,9 +34,7 @@ class FormField extends React.Component {
           <InputLabel>{label}</InputLabel>
           <Input
             type={type || 'text'}
-            onKeyUp={e => (
-              console.log(name, e.target), handleEdit(name, e.target.value)
-            )}
+            onKeyUp={e => handleEdit(name, e.target.value)}
           />
 
           <FormHelperText error={error} />

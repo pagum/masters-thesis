@@ -34,11 +34,9 @@ const toolbarStyles = theme => ({
 
 const EnhancedTableToolbar = props => {
   const { classes, selectedItems, createToolList } = props;
-  console.log(props);
   const numSelected = selectedItems.length;
   const addToOrder = selectedItems => {
     createToolList(selectedItems);
-    console.log(selectedItems);
   };
   return (
     <Toolbar
