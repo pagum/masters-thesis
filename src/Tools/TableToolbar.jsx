@@ -65,9 +65,7 @@ const EnhancedTableToolbar = props => {
           <Tooltip title="Add to order">
             <IconButton
               aria-label="Order"
-              onClick={() => (
-                addToOrder(selectedItems), console.log('lllllllllll')
-              )}
+              onClick={() => addToOrder(selectedItems)}
             >
               <AddIcon />
             </IconButton>

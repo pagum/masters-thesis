@@ -10,7 +10,6 @@ export const prepareData = (toolsToOrder, totalCost) => ({
 export const prepareDataForExcel = order => {
   const headerRow = ['Name', 'Application', 'Producent', 'Amount', 'Price'];
   const arrayOfTools = order.tools.map(tool => {
-    console.log(tool);
     return [
       tool.name,
       tool.application,
@@ -19,7 +18,6 @@ export const prepareDataForExcel = order => {
       tool.price.toString(),
     ];
   });
-  console.log(arrayOfTools);
   const summaryRow = ['Total cost', ' ', ' ', ' ', order.sum];
   return [headerRow, arrayOfTools, [], summaryRow];
 };

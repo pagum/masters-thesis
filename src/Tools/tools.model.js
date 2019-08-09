@@ -39,5 +39,15 @@ export const toolsModel = {
     getToolsState(state) {
       return slice(state => state.tools);
     },
+    getToolsNamePrice(state) {
+      return slice(state =>
+        state.tools.map(tool => ({
+          name: tool.info.name,
+          price: tool.info.price,
+          price: tool.info.price,
+          units: tool.info.units,
+        })),
+      );
+    },
   }),
 };

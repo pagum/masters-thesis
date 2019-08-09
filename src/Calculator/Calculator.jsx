@@ -1,11 +1,13 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { select } from '../store';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
+import { connect } from 'react-redux';
 
 import {
   FormWrapper,
@@ -14,7 +16,9 @@ import {
   CalculatorWrapper,
   CentredTypography,
   InputsWrapper,
+  CountButton,
 } from './Calculator.style';
+import { round } from './helper';
 
 const styles = theme => ({
   container: {
@@ -41,11 +45,11 @@ class Calculator extends React.Component {
     serviceLife: null,
     machineHour: null,
     cost: null,
+    selectedTool: null,
   };
-
   handleChange = name => event => {
     this.setState({
-      [name]: Number(event.target.value),
+      [name]: event.target.value,
     });
   };
   countTheCost = e => {
@@ -62,9 +66,13 @@ class Calculator extends React.Component {
     const secondPart = (mainMachiningTime * cost) / serviceLife;
 
     const costOfUsingTool = firstPart + secondPart;
+    const roundedValue = round(costOfUsingTool, 2);
+    this.setState({ costOfUsingTool: roundedValue });
   };
   render() {
-    const { classes } = this.props;
+    const { tools } = this.props;
+    const { costOfUsingTool, selectedTool } = this.state;
+    console.log(this.state);
     return (
       <CalculatorWrapper>
         <CentredTypography variant="h5" id="tableTitle">
@@ -73,76 +81,79 @@ class Calculator extends React.Component {
 
         <FormWrapper noValidate autoComplete="off">
           <InputsWrapper>
-            <DropdownList className={classes.formControl}>
-              <InputLabel>Tool</InputLabel>
+            <DropdownList>
+              {!this.state.selectedTool && <InputLabel>Tool</InputLabel>}
               <Select
-                value={this.state.age}
-                onChange={this.handleChange}
-                inputProps={{
-                  name: 'age',
-                  id: 'age-simple',
-                }}
+                value={this.state.selectedTool}
+                onChange={this.handleChange('selectedTool')}
               >
-                <MenuItem value="">
-                  <em>Different</em>
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                {tools.map(tool => (
+                  <MenuItem value={tool}>{tool.name}</MenuItem>
+                ))}
               </Select>
             </DropdownList>
             <InputField
               type="number"
-              id="standard-name"
               label="Main machining time [h]"
-              className={classes.textField}
               value={this.state.mainMachiningTime}
               onChange={this.handleChange('mainMachiningTime')}
               margin="normal"
             />
             <InputField
               type="number"
-              id="standard-name"
               label="Helper machining time [h]"
-              className={classes.textField}
               value={this.state.helperMachiningTime}
               onChange={this.handleChange('helperMachiningTime')}
               margin="normal"
             />
             <InputField
               type="number"
-              id="standard-name"
               label="Tool service life [h]"
-              className={classes.textField}
               value={this.state.serviceLife}
               onChange={this.handleChange('serviceLife')}
               margin="normal"
             />
             <InputField
               type="number"
-              id="standard-name"
               label="Machine hour [h/zł]"
-              className={classes.textField}
               value={this.state.machineHour}
               onChange={this.handleChange('machineHour')}
               margin="normal"
             />{' '}
             <InputField
               type="number"
-              id="standard-name"
               label="
 Depreciation cost [zł/h]"
-              className={classes.textField}
               value={this.state.cost}
               onChange={this.handleChange('cost')}
               margin="normal"
             />
           </InputsWrapper>
-          <Button onClick={e => this.countTheCost(e)}>Count</Button>
+          <CountButton
+            variant="outlined"
+            color="primary"
+            onClick={e => this.countTheCost(e)}
+          >
+            Count
+          </CountButton>
         </FormWrapper>
+        {costOfUsingTool && (
+          <div>
+            <p>Cost of using this tool is {costOfUsingTool} zł</p>
+            {selectedTool && (
+              <>
+                <p>{selectedTool.units} of this tool are in stock</p>
+                <p>The price of the tool is {selectedTool.price} zł</p>
+              </>
+            )}
+          </div>
+        )}
       </CalculatorWrapper>
     );
   }
 }
+const mapState = state => ({
+  tools: select.toolsModel.getToolsNamePrice(state),
+});
 
-export default withStyles(styles)(Calculator);
+export default connect(mapState)(Calculator);
