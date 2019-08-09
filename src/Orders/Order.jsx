@@ -1,11 +1,13 @@
 import React from 'react';
-
 import * as R from 'ramda';
 import { connect } from 'react-redux';
 import { select } from '../store';
 import NewOrderTable from './NewOrderTable';
 import PreviousOrders from './PreviousOrders';
 import { OrderWrapper } from './Orders.style';
+import XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+import { prepareDataForExcel } from './helpers';
 
 class EnhancedTable extends React.PureComponent {
   state = {
@@ -21,16 +23,7 @@ class EnhancedTable extends React.PureComponent {
     const orders = await this.props.getAllOrders();
     orders && this.setState({ ...this.state, orders });
   };
-  // shouldComponentUpdate = () => {};
 
-  // componentDidUpdate = async (prevProps, prevState) => {
-  //   console.log(prevState);
-  //   console.log(this.state);
-  //   if (prevState.orders.length !== this.state.orders.length) {
-  //     const orders = await this.props.getAllOrders();
-  //     this.setState({ ...this.state, orders });
-  //   }
-  // };
   handleRequestSort = (event, property) => {
     const orderBy = event.target.textContent.toLowerCase();
     let order = 'desc';
@@ -104,8 +97,37 @@ class EnhancedTable extends React.PureComponent {
     const newDialogState = !this.state.isDialogOpen;
     this.setState({ isDialogOpen: newDialogState });
   };
+  downloadOrder = async id => {
+    const order = await this.props.getOrder(id);
+    console.log(order);
+
+    var wb = XLSX.utils.book_new();
+    wb.Props = {
+      Title: 'SheetJS Tutorial',
+      Subject: 'Test',
+      Author: 'Red Stapler',
+      CreatedDate: new Date(),
+    };
+    const sheetName = `${order.date}`;
+    wb.SheetNames.push(sheetName);
+    var ws_data = prepareDataForExcel(order);
+    console.log(ws_data);
+    var ws = XLSX.utils.aoa_to_sheet(ws_data);
+    wb.Sheets[sheetName] = ws;
+    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+    function s2ab(s) {
+      var buf = new ArrayBuffer(s.length); //convert s to arrayBuffer
+      var view = new Uint8Array(buf); //create uint8array as viewer
+      for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff; //convert to octet
+      return buf;
+    }
+    saveAs(
+      new Blob([s2ab(wbout)], { type: 'application/octet-stream' }),
+      `${order.date}.xlsx`,
+    );
+  };
   render() {
-    const { newOrderList, deleteOrder, getOrder, orders } = this.props;
+    const { newOrderList, deleteOrder, orders } = this.props;
 
     console.log(this.state);
     return (
@@ -114,7 +136,7 @@ class EnhancedTable extends React.PureComponent {
         <PreviousOrders
           orders={orders || []}
           deleteOrder={deleteOrder}
-          downloadOrder={getOrder}
+          downloadOrder={this.downloadOrder}
         />
       </OrderWrapper>
     );

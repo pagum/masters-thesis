@@ -20,7 +20,7 @@ const NewOrderSummary = props => {
   const { newOrderList, createOrder } = props;
   const totalCost = newOrderList.length > 0 ? countSum(newOrderList) : null;
   const makeOrder = () => {
-    const preparedData = prepareData(newOrderList);
+    const preparedData = prepareData(newOrderList, totalCost);
     createOrder(preparedData);
   };
   return (

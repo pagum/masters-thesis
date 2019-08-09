@@ -5,6 +5,7 @@ const InfoPaper = styled(Paper)`
   padding: 10px;
   text-align: center;
   height: 80px;
+  border-radius: 0 0 4px 4px !important;
 `;
 
 const CostWrapper = styled.div`
@@ -28,6 +29,11 @@ const OrderWrapper = styled.div`
   width: 98% !important;
   margin: 10px auto !important;
 `;
+const NoItemMessageWrapper = styled.div`
+  padding: 20px !important;
+  text-align: center;
+  color: gray;
+`;
 const PaperWrapper = styled(Paper)`
   margin: 15px;
 `;
@@ -49,5 +55,6 @@ export {
   OrderWrapper,
   OrderTypography,
   StyledTableCell,
+  NoItemMessageWrapper,
   TableWrapper,
 };

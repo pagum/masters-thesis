@@ -13,7 +13,11 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import NewOrderSummary from './NewOrderSummary';
 import { Typography } from '@material-ui/core';
-import { PaperWrapper, OrderTypography } from './Orders.style';
+import {
+  PaperWrapper,
+  OrderTypography,
+  NoItemMessageWrapper,
+} from './Orders.style';
 
 const menuItems = ['1', '2', '3', '4', ' 5', '6', '7', '8', '9', '10'];
 
@@ -56,7 +60,7 @@ class NewOrderTable extends React.Component {
       <PaperWrapper>
         <OrderTypography variant="h6">New order</OrderTypography>
         {newOrderList.length === 0 ? (
-          <div>No items added</div>
+          <NoItemMessageWrapper>No items added</NoItemMessageWrapper>
         ) : (
           <>
             <Table>

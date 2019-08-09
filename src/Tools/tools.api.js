@@ -7,7 +7,6 @@ export const getTools = async () => {
 
 export const getToolById = async toolId => {
   const response = await api.get(`/tool/${toolId}`);
-  console.log(response);
   return response;
 };
 export const addTool = async tool => {

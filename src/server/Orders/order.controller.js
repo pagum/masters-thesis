@@ -1,11 +1,11 @@
 import Order from './order.model';
 import { ObjectId } from 'mongodb';
 import ApiError from '../ApiError';
-const chalk = require('chalk');
+import * as R from 'ramda';
 
 export const getAllOrders = async () => {
   const orders = await Order.find({});
-  return orders;
+  return R.reverse(orders);
 };
 
 export const getOrderById = async orderId => {
