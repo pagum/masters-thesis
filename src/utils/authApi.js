@@ -19,6 +19,9 @@ export default class Api {
   static async post(url, data, config) {
     return this.axiosInstance.post(url, data, config);
   }
+  static async delete(url, data, config) {
+    return this.axiosInstance.delete(url, data, config);
+  }
   static async request(config) {
     return this.axiosInstance.request(config);
   }

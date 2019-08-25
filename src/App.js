@@ -4,20 +4,24 @@ import { Provider } from 'react-redux';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import { history } from './history';
-import { store } from './store';
+import { store, dispatch } from './store';
 import './App.css';
 import LoginPage from './AuthModule/LoginPage';
-import ProtectedRoute from './utils/ProtectedRoute/ProtectedRoute';
 import MenuAppBar from './MenuAppBar/MenuAppBar';
-import EnhancedTable from './Summary/Summary';
 import AuthProvider from './utils/ProtectedRoute/AuthContext';
+import Table from './Tools/Table';
+import About from './About/About';
+import Calculator from './Calculator/Calculator';
+import Order from './Orders/Order';
+import Summary from './Summary/Summary';
+
 const theme = createMuiTheme({
   palette: {
     primary: {
       main: '#5e76a3',
     },
     secondary: {
-      main: '#f44336',
+      main: '#808080',
     },
   },
 });
@@ -32,14 +36,11 @@ class App extends Component {
                 <MenuAppBar />
                 <Switch>
                   <Route exact path="/" component={LoginPage} />
-                  <Route path="/about" component={EnhancedTable} />
-                  <ProtectedRoute path="/summary" component={EnhancedTable} />
-                  <ProtectedRoute path="/tools" component={EnhancedTable} />
-                  <ProtectedRoute path="/orders" component={EnhancedTable} />
-                  <ProtectedRoute
-                    path="/calculator"
-                    component={EnhancedTable}
-                  />
+                  <Route path="/about" component={About} />
+                  <Route path="/summary" component={Summary} />
+                  <Route path="/tools" component={Table} />
+                  <Route path="/orders" component={Order} />
+                  <Route path="/calculator" component={Calculator} />
                 </Switch>
               </Fragment>
             </Router>

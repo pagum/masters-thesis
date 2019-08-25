@@ -1,11 +1,13 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import { Redirect } from 'react-router-dom';
-import Menu from '@material-ui/core/Menu';
+
+import Button from '@material-ui/core/Button';
 import { select } from '../store';
 import Tab from '@material-ui/core/Tab';
 import { TabWrapper, ImageButton } from './Menu.style';
@@ -26,61 +28,63 @@ const styles = {
 };
 
 class MenuAppBar extends React.Component {
-  state = {
-    anchorEl: null,
-  };
-  componentDidUpdate = prevProps => {
-    console.log(prevProps);
-    console.log(this.props);
-  };
   handleMenu = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
 
-  handleClose = () => {
-    this.setState({ anchorEl: null });
+  handleChange = value => {
+    this.props.history.push(`/${value}`);
   };
 
-  redirectTo = website => {
+  goTo = website => {
     window.location.assign(website, '_blank');
+  };
+  logout = () => {
+    this.props.logoutUser();
   };
 
   render() {
     const { classes, isAuthed, logoutUser } = this.props;
-    console.log(isAuthed);
+    const authedMenu = ['summary', 'tools', 'orders', 'calculator', 'about'];
+    const nonAuthedMenu = ['about'];
+    const menuButtons = isAuthed ? authedMenu : nonAuthedMenu;
     return (
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
             <ImageButton
               src={logoPgSmall}
-              onClick={() => this.redirectTo(pgWebsite)}
+              onClick={() => this.goTo(pgWebsite)}
             />
-            <ImageButton src={wm} onClick={() => this.redirectTo(wmWebsite)} />
-
-            <TabWrapper
-              value={this.state.value}
-              onChange={this.handleChange}
-              variant="fullWidth"
-              indicatorColor="secondary"
-              textColor="secondary"
-            >
+            <ImageButton src={wm} onClick={() => this.goTo(wmWebsite)} />
+            <Fragment>
+              {menuButtons.map(button => (
+                <Button
+                  value={button}
+                  key={button}
+                  onClick={() => this.handleChange(button)}
+                >
+                  {button.toUpperCase()}
+                </Button>
+              ))}
               {isAuthed ? (
-                <Fragment>
-                  <Tab label="SUMMARY" />
-                  <Tab label="TOOLS" />
-                  <Tab label="ORDERS" />
-                  <Tab label="CALCULATOR" />
-                  <Tab label="ABOUT" />
-                  <Tab label="LOG OUT" onClick={logoutUser} />
-                </Fragment>
+                <Button
+                  value={'logout'}
+                  key={'logout'}
+                  onClick={e => this.logout(e)}
+                >
+                  LOG OUT
+                </Button>
               ) : (
-                <Fragment>
-                  <Tab label="ABOUT" />
-                  <Tab label="LOG IN" />
-                </Fragment>
+                <Button
+                  value={'login'}
+                  key={'login'}
+                  onClick={() => this.handleChange('')}
+                >
+                  LOG IN
+                </Button>
               )}
-            </TabWrapper>
+            </Fragment>
           </Toolbar>
         </AppBar>
       </div>
@@ -98,9 +102,11 @@ const mapDispatch = dispatch => ({
   logoutUser: dispatch.authData.logoutUser,
 });
 
-export default withStyles(styles)(
-  connect(
-    mapState,
-    mapDispatch,
-  )(MenuAppBar),
+export default withRouter(
+  withStyles(styles)(
+    connect(
+      mapState,
+      mapDispatch,
+    )(MenuAppBar),
+  ),
 );

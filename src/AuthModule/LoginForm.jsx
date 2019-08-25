@@ -1,18 +1,18 @@
-import React from "react";
-import { Field } from "formik";
-import { withFormik } from "formik";
-import * as Yup from "yup";
-import { visibility_on, visibility_off } from "../assets";
+import React from 'react';
+import { Field } from 'formik';
+import { withFormik } from 'formik';
+import * as Yup from 'yup';
+import { visibility_on, visibility_off } from '../assets';
 
-import Button from "../common/components/Button";
-import FormHelperText from "../common/components/FormHelperText";
+import Button from '../common/components/Button';
+import FormHelperText from '../common/components/FormHelperText';
 import {
   FormWrapper,
   BorderLine,
   LoginInput,
   ShowHideButton,
-  FieldButtonContainer
-} from "./Login.style";
+  FieldButtonContainer,
+} from './Login.style';
 
 const LoginInformationForm = ({
   errors,
@@ -21,7 +21,7 @@ const LoginInformationForm = ({
   isSubmitting,
   setFieldValue,
   postAuthData,
-  setIsAuth
+  setIsAuth,
 }) => {
   return (
     <FormWrapper>
@@ -44,13 +44,13 @@ const LoginInformationForm = ({
         <ShowHideButton
           onClick={() =>
             setFieldValue(
-              "passwordInputType",
-              values.passwordInputType === "password" ? "text" : "password",
-              false
+              'passwordInputType',
+              values.passwordInputType === 'password' ? 'text' : 'password',
+              false,
             )
           }
           src={
-            values.passwordInputType === "password"
+            values.passwordInputType === 'password'
               ? visibility_on
               : visibility_off
           }
@@ -64,9 +64,9 @@ const LoginInformationForm = ({
       <Button
         label="login"
         type={{
-          size: "big",
-          margin: "bigMargin",
-          fontSize: "bigFont"
+          size: 'big',
+          margin: 'bigMargin',
+          fontSize: 'bigFont',
         }}
         disabled={isSubmitting}
       />
@@ -82,25 +82,25 @@ const LoginInformationForm = ({
 const LoginForm = withFormik({
   mapPropsToValues({ username, password, remember, passwordInputType }) {
     return {
-      username: username || "",
-      password: password || "",
+      username: username || '',
+      password: password || '',
       remember: remember || false,
-      passwordInputType: passwordInputType || "password"
+      passwordInputType: passwordInputType || 'password',
     };
   },
   validationSchema: Yup.object().shape({
-    username: Yup.string().required("Username is required"),
-    password: Yup.string().required("Password is required")
+    username: Yup.string().required('Username is required'),
+    password: Yup.string().required('Password is required'),
   }),
   handleSubmit(values, { props, resetForm, setErrors, setSubmitting }) {
-    if (values.username === "andrew") {
-      setErrors({ username: "Username is required" });
+    if (values.username === 'andrew') {
+      setErrors({ username: 'Username is required' });
     } else {
       try {
         props.postAuthData({
           username: values.username,
           password: values.password,
-          remember: values.remember
+          remember: values.remember,
         });
       } catch (e) {
         console.error(e);
@@ -109,7 +109,7 @@ const LoginForm = withFormik({
     setSubmitting(false);
   },
   validateOnBlur: false,
-  validateOnChange: false
+  validateOnChange: false,
 })(LoginInformationForm);
 
 export default LoginForm;
