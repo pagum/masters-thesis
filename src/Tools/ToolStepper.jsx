@@ -12,7 +12,7 @@ import FormField from '../common/components/FormField';
 
 import SelectComponent from '../common/components/Select';
 import { infoFields, techFields, paramFields } from './data';
-import { FormGridWrapper, GridContent } from './Tools.style';
+import { FormGridWrapper, GridContent, ToolsTypography } from './Tools.style';
 
 const styles = theme => ({
   root: {
@@ -169,9 +169,7 @@ class ToolStepper extends React.Component {
       skipped,
     });
   };
-  handleFinish = () => {
-    console.log(this.state);
-  };
+  s;
 
   handleBack = () => {
     this.setState(state => ({
@@ -291,7 +289,7 @@ class ToolStepper extends React.Component {
             const labelProps = {};
             if (this.isStepOptional(index)) {
               labelProps.optional = (
-                <Typography variant="caption">Optional</Typography>
+                <ToolsTypography variant="caption">Optional</ToolsTypography>
               );
             }
             if (this.isStepSkipped(index)) {
@@ -307,9 +305,9 @@ class ToolStepper extends React.Component {
         <div>
           {activeStep === steps.length ? (
             <div>
-              <Typography className={classes.instructions}>
+              <ToolsTypography className={classes.instructions}>
                 All steps completed - you&apos;re finished
-              </Typography>
+              </ToolsTypography>
 
               <Button onClick={this.handleSubmit} className={classes.button}>
                 Submit
@@ -317,9 +315,9 @@ class ToolStepper extends React.Component {
             </div>
           ) : (
             <div>
-              <Typography className={classes.instructions}>
+              <ToolsTypography className={classes.instructions}>
                 {this.getStepContent(activeStep)}
-              </Typography>
+              </ToolsTypography>
               <div>
                 <Button
                   disabled={activeStep === 0}

@@ -2,7 +2,6 @@ import api from '../utils/api';
 
 export const fetchOrders = async () => {
   const response = await api.get('/orders');
-  console.log(response);
   return response;
 };
 

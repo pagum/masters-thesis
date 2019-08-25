@@ -6,7 +6,6 @@ const AuthContext = React.createContext();
 
 class AuthProvider extends React.Component {
   render() {
-    console.log(this.props.isAuth);
     return (
       <AuthContext.Provider
         value={{

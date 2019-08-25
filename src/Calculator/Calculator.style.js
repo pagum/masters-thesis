@@ -8,6 +8,18 @@ const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
 `;
+const FormulaImg = styled.img`
+  width: 20%;
+  height:80%
+  padding: 0 150px;
+`;
+const FormulaWrapper = styled.div`
+  display: flex;
+  margin: 0 auto;
+  width: 80%;
+  justify-content: space-between;
+  flex-direction: row;
+`;
 
 const InputsWrapper = styled.div`
   display: flex;
@@ -45,4 +57,6 @@ export {
   DropdownList,
   CentredTypography,
   InputsWrapper,
+  FormulaImg,
+  FormulaWrapper,
 };

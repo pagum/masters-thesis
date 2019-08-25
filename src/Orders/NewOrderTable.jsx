@@ -36,9 +36,6 @@ class NewOrderTable extends React.Component {
     }
   };
   onTextFieldChange = (name, value) => {
-    // this.state.newOrderList.map(tool =>
-    //   tool.name === name ? { ...tool, amount: value } : tool,
-    // );
     this.setState({
       [name]: value,
       newOrderList: this.state.newOrderList.map(tool =>
@@ -107,7 +104,7 @@ class NewOrderTable extends React.Component {
                   </TableRow>
                 ))}
               </TableBody>
-            </Table>{' '}
+            </Table>
             <NewOrderSummary
               newOrderList={newOrderList}
               createOrder={createOrder}

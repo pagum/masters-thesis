@@ -19,7 +19,6 @@ class EnhancedTable extends React.PureComponent {
     isDialogOpen: false,
   };
   componentDidMount = async () => {
-    console.log(this.props);
     const orders = await this.props.getAllOrders();
     orders && this.setState({ ...this.state, orders });
   };
@@ -79,7 +78,6 @@ class EnhancedTable extends React.PureComponent {
   addToOrder = event => {
     const { toOrder } = this.state;
     const id = Number(event.target.value);
-    console.log(event.target.value);
     const newToOrder = this.isSelected(id)
       ? R.without([id], toOrder)
       : R.append(id, toOrder);
@@ -99,7 +97,6 @@ class EnhancedTable extends React.PureComponent {
   };
   downloadOrder = async id => {
     const order = await this.props.getOrder(id);
-    console.log(order);
 
     var wb = XLSX.utils.book_new();
     wb.Props = {
@@ -111,7 +108,6 @@ class EnhancedTable extends React.PureComponent {
     const sheetName = `${order.date}`;
     wb.SheetNames.push(sheetName);
     var ws_data = prepareDataForExcel(order);
-    console.log(ws_data);
     var ws = XLSX.utils.aoa_to_sheet(ws_data);
     wb.Sheets[sheetName] = ws;
     var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
@@ -129,7 +125,6 @@ class EnhancedTable extends React.PureComponent {
   render() {
     const { newOrderList, deleteOrder, orders } = this.props;
 
-    console.log(this.state);
     return (
       <OrderWrapper>
         <NewOrderTable newOrderList={newOrderList} />
@@ -144,7 +139,6 @@ class EnhancedTable extends React.PureComponent {
 }
 
 const mapState = state => {
-  console.log(select.orderModel.getPreviousOrders(state));
   return {
     newOrderList: select.orderModel.getNewOrderList(state),
     orders: select.orderModel.getPreviousOrders(state),

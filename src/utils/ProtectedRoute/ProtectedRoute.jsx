@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 class ProtectedRoute extends Component {
   render() {
     const { component: Component, isAuthed, ...rest } = this.props;
-    console.log(this.props.isAuthed);
+
     return (
       <Route
         render={props => {

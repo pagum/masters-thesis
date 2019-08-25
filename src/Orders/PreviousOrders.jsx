@@ -17,7 +17,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
 
 const PreviousOrders = ({ orders, downloadOrder, deleteOrder }) => {
-  console.log(orders);
   return (
     <PaperWrapper>
       <OrderTypography variant="h6">Previous orders</OrderTypography>

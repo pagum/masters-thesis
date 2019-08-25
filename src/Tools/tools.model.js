@@ -18,7 +18,6 @@ export const toolsModel = {
     },
     async fetchToolById(toolId) {
       const { data } = await getToolById(toolId);
-      console.log(data);
       return data;
     },
     async deleteTool(toolId) {

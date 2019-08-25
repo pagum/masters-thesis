@@ -18,6 +18,6 @@ export const prepareDataForExcel = order => {
       tool.price.toString(),
     ];
   });
-  const summaryRow = ['Total cost', ' ', ' ', ' ', order.sum];
-  return [headerRow, arrayOfTools, [], summaryRow];
+  const summaryRow = ['Total', ' ', ' ', ' ', order.sum];
+  return [headerRow, ...arrayOfTools, [], summaryRow];
 };

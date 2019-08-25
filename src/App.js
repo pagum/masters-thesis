@@ -13,6 +13,7 @@ import Table from './Tools/Table';
 import About from './About/About';
 import Calculator from './Calculator/Calculator';
 import Order from './Orders/Order';
+import Summary from './Summary/Summary';
 
 const theme = createMuiTheme({
   palette: {
@@ -36,7 +37,7 @@ class App extends Component {
                 <Switch>
                   <Route exact path="/" component={LoginPage} />
                   <Route path="/about" component={About} />
-                  <Route path="/summary" component={About} />
+                  <Route path="/summary" component={Summary} />
                   <Route path="/tools" component={Table} />
                   <Route path="/orders" component={Order} />
                   <Route path="/calculator" component={Calculator} />

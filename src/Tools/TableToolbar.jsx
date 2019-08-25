@@ -11,6 +11,7 @@ import AddIcon from '@material-ui/icons/Add';
 import ToolForm from './ToolForm';
 
 import { lighten } from '@material-ui/core/styles/colorManipulator';
+import { TitleWrapper, ToolTitleTypography } from './Tools.style';
 
 const toolbarStyles = theme => ({
   root: {
@@ -27,9 +28,6 @@ const toolbarStyles = theme => ({
   actions: {
     color: theme.palette.primary.main,
   },
-  title: {
-    flex: '0 0 auto',
-  },
 });
 
 const EnhancedTableToolbar = props => {
@@ -44,21 +42,19 @@ const EnhancedTableToolbar = props => {
         [classes.highlight]: numSelected > 0,
       })}
     >
-      <div className={classes.title}>
+      <TitleWrapper>
+        <ToolTitleTypography variant="h6">Tools</ToolTitleTypography>
         {numSelected > 0 ? (
           <Typography color="inherit" variant="subtitle1">
-            {numSelected} selected
+            {numSelected} items selected
           </Typography>
         ) : (
           <>
-            <Typography variant="h6" id="tableTitle">
-              Tools
-            </Typography>
-
             <ToolForm />
           </>
         )}
-      </div>
+      </TitleWrapper>
+
       <div className={classes.spacer} />
       <div className={classes.actions}>
         {numSelected > 0 && (

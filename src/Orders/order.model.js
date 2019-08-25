@@ -19,7 +19,6 @@ export const orderModel = {
       return { ...state, newOrder };
     },
     onSetOrderList(state, payload) {
-      console.log(payload);
       return { ...state, orders: payload };
     },
   },

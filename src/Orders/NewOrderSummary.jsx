@@ -4,12 +4,14 @@ import { prepareData } from './helpers';
 
 const countSum = arrayOfTools => {
   const toolsWithAmount = arrayOfTools.filter(tool => tool.amount);
-
+  const costOfToolsWithAmount = toolsWithAmount.map(
+    tool => tool.price * Number(tool.amount),
+  );
   var totalCost =
     toolsWithAmount.length > 0 &&
     (toolsWithAmount.length > 1
-      ? toolsWithAmount.reduce(
-          (a, b) => a.price * Number(a.amount) + b.price * Number(b.amount),
+      ? costOfToolsWithAmount.reduce(
+          (previousValue, currentValue) => previousValue + currentValue,
         )
       : Number(toolsWithAmount[0].amount) * toolsWithAmount[0].price);
 
