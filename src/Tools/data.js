@@ -93,12 +93,6 @@ export const infoFields = [
     type: 'input',
     dataType: 'number',
   },
-  {
-    label: 'Upload image',
-    name: 'uploadImage',
-    required: false,
-    type: 'button',
-  },
 ];
 
 export const techFields = [

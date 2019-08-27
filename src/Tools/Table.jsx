@@ -173,12 +173,6 @@ class EnhancedTable extends React.Component {
                           >
                             <DeleteIcon />
                           </IconButton>
-                          <IconButton
-                            value={row._id}
-                            onClick={e => this.editSelectedTool(row._id)}
-                          >
-                            <EditIcon />
-                          </IconButton>
                         </IconWrapper>
                       </SmallerTableCell>
 
@@ -198,7 +192,6 @@ class EnhancedTable extends React.Component {
 
                       <SmallerTableCell padding="checkbox">
                         <Checkbox
-                          // color={'#5e76a3'}
                           value={row._id}
                           onClick={event => (
                             this.handleClick(event, row._id), this.addToOrder
@@ -212,7 +205,7 @@ class EnhancedTable extends React.Component {
           </Table>
         </div>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={5}
           component="div"
           count={data.length}
           rowsPerPage={rowsPerPage}

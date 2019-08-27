@@ -2,7 +2,6 @@ import React from 'react';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Tooltip from '@material-ui/core/Tooltip';
 import { SmallerTableCell } from './Tools.style';
 
 class EnhancedTableHead extends React.Component {
@@ -12,6 +11,7 @@ class EnhancedTableHead extends React.Component {
 
   render() {
     const { order, orderBy, header } = this.props;
+    console.log(orderBy);
     return (
       <TableHead>
         <TableRow>
@@ -21,19 +21,13 @@ class EnhancedTableHead extends React.Component {
                 key={row.id}
                 sortDirection={orderBy === row.id ? order : false}
               >
-                <Tooltip
-                  title="Sort"
-                  placement={row.numeric ? 'bottom-end' : 'bottom-start'}
-                  enterDelay={300}
+                <TableSortLabel
+                  active={orderBy === row.id}
+                  direction={order}
+                  onClick={this.createSortHandler(row.id)}
                 >
-                  <TableSortLabel
-                    active={orderBy === row.id}
-                    direction={order}
-                    onClick={this.createSortHandler(row.id)}
-                  >
-                    {row.label}
-                  </TableSortLabel>
-                </Tooltip>
+                  {row.label}
+                </TableSortLabel>
               </SmallerTableCell>
             ),
             this,
