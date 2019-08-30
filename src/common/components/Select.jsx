@@ -6,7 +6,7 @@ import Select from '@material-ui/core/Select';
 import styled from 'styled-components';
 
 const StyledFormControl = styled(FormControl)`
-  width: 80%;
+  width: ${props => props.width || '80%'};
 `;
 class SelectComponent extends React.Component {
   state = {};
@@ -18,10 +18,18 @@ class SelectComponent extends React.Component {
     value && this.setState({ [name]: value });
   }
   render() {
-    const { label, menuItems, handleEdit, name, required, value } = this.props;
+    const {
+      label,
+      menuItems,
+      handleEdit,
+      name,
+      width,
+      required,
+      value,
+    } = this.props;
 
     return (
-      <StyledFormControl required={required}>
+      <StyledFormControl required={required} width={width}>
         <InputLabel>{label}</InputLabel>
         <Select
           value={value}

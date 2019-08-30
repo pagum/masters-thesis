@@ -3,7 +3,11 @@ import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 import TableCell from '@material-ui/core/TableCell';
 import Paper from '@material-ui/core/Paper';
-import { Typography, DialogTitle } from '@material-ui/core';
+import { Typography, DialogTitle, DialogContentText } from '@material-ui/core';
+
+export const DialogContentTextWhite = styled(DialogContentText)`
+  color: white !important;
+`;
 
 export const PaperWrapper = styled(Paper)`
   width: 98% !important;
@@ -53,4 +57,12 @@ export const FormGridWrapper = styled.div`
 export const GridContent = styled.div`
   justify-content: center;
   display: flex;
+`;
+
+export const DialogWrapper = styled.div`
+  padding: 20px;
+`;
+export const BlueTypography = styled(Typography)`
+  color: #5e76a3 !important;
+  padding: 5px 0;
 `;

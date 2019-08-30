@@ -9,7 +9,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import AddIcon from '@material-ui/icons/Add';
 import ToolStepper from './ToolStepper';
 
-import { NewToolDialogTitle } from './Tools.style';
+import { NewToolDialogTitle, DialogContentTextWhite } from './Tools.style';
 
 export default class ToolForm extends React.Component {
   state = {
@@ -42,10 +42,10 @@ export default class ToolForm extends React.Component {
         >
           <NewToolDialogTitle>New tool</NewToolDialogTitle>
           <DialogContent>
-            <DialogContentText>
+            <DialogContentTextWhite>
               To subscribe to this website, please enter your email address
-              here. We will send updates occasionally.
-            </DialogContentText>
+              here. We will
+            </DialogContentTextWhite>
 
             <ToolStepper />
           </DialogContent>

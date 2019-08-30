@@ -1,5 +1,4 @@
 import React from 'react';
-import * as R from 'ramda';
 
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
@@ -7,7 +6,6 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import FormField from '../common/components/FormField';
 
 import SelectComponent from '../common/components/Select';

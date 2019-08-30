@@ -10,6 +10,7 @@ import {
   getToolById,
   deleteTool,
   addTool,
+  updateTool,
 } from './Tools/tools.controller';
 import {
   addOrder,
@@ -93,6 +94,16 @@ app.delete('/deleteTool/:toolId', async (req, res) => {
   try {
     const { toolId } = req.params;
     const data = await deleteTool(toolId);
+    res.send(data);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+});
+app.patch('/updateTool/:toolId', async (req, res) => {
+  try {
+    const { toolId } = req.params;
+    const data = await updateTool({ id: toolId, params: req.body });
     res.send(data);
   } catch (error) {
     console.log(error);

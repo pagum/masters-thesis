@@ -30,3 +30,24 @@ export const addTool = async newTool => {
   });
   return tool;
 };
+
+export const updateTool = async updatedTool => {
+  console.log(updatedTool);
+  const tool = await Tool.findByIdAndUpdate(
+    updatedTool.id,
+    {
+      $set: updatedTool.params,
+    },
+    { upsert: true },
+    function(err, result) {
+      if (err) {
+        console.log(err);
+      }
+      console.log('RESULT: ' + result);
+    },
+  );
+  tool.update(err => {
+    if (err) console.log(err);
+  });
+  return tool;
+};

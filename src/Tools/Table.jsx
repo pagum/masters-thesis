@@ -15,7 +15,10 @@ import EnhancedTableToolbar from './TableToolbar';
 import { header } from './data';
 import { IconWrapper, SmallerTableCell, PaperWrapper } from './Tools.style';
 import DeleteIcon from '@material-ui/icons/Delete';
+import InfoIcon from '@material-ui/icons/Info';
 import EditIcon from '@material-ui/icons/Edit';
+import ToolInfoModal from './ToolInfoModal';
+import ToolEditModal from './ToolEditModal';
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -49,9 +52,25 @@ class EnhancedTable extends React.Component {
     selected: [],
     orderBy: 'Name',
     page: 0,
+    openInfoModal: null,
+    openEditModal: null,
     rowsPerPage: 5,
     isDialogOpen: false,
   };
+  handleClickOpenInfoModal(id) {
+    const tool = this.props.data.filter(tool => tool._id === id);
+    this.setState({ openInfoModal: true, tool });
+  }
+  handleClickCloseInfoModal() {
+    this.setState({ openInfoModal: false, tool: null });
+  }
+  handleClickOpenEditModal(id) {
+    const tool = this.props.data.filter(tool => tool._id === id);
+    this.setState({ openEditModal: true, tool });
+  }
+  handleClickCloseEditModal() {
+    this.setState({ openEditModal: false, tool: null });
+  }
 
   handleRequestSort = (event, property) => {
     const orderBy = event.target.textContent.toLowerCase();
@@ -113,11 +132,9 @@ class EnhancedTable extends React.Component {
 
     this.setState({ toOrder: newToOrder });
   };
+
   deleteSelectedTool = async toolId => {
     await this.props.deleteTool(toolId);
-  };
-  editSelectedTool = async toolId => {
-    await this.props.fetchToolById(toolId);
   };
 
   toggleDialog = () => {
@@ -126,8 +143,15 @@ class EnhancedTable extends React.Component {
   };
   render() {
     const { data, createToolList } = this.props;
-    const { order, orderBy, selected, rowsPerPage, page } = this.state;
-
+    const {
+      order,
+      orderBy,
+      selected,
+      rowsPerPage,
+      page,
+      openEditModal,
+      openInfoModal,
+    } = this.state;
     return (
       <PaperWrapper>
         <EnhancedTableToolbar
@@ -172,7 +196,39 @@ class EnhancedTable extends React.Component {
                             onClick={e => this.deleteSelectedTool(row._id)}
                           >
                             <DeleteIcon />
+                          </IconButton>{' '}
+                          <IconButton
+                            value={row._id}
+                            onClick={e =>
+                              this.handleClickOpenEditModal(row._id)
+                            }
+                          >
+                            <EditIcon />
                           </IconButton>
+                          {this.state.tool && (
+                            <ToolEditModal
+                              selectedValue={row._id}
+                              open={openEditModal}
+                              tool={this.state.tool}
+                              onClose={e => this.handleClickCloseEditModal()}
+                            />
+                          )}
+                          <IconButton
+                            value={row._id}
+                            onClick={e =>
+                              this.handleClickOpenInfoModal(row._id)
+                            }
+                          >
+                            <InfoIcon />
+                          </IconButton>
+                          {this.state.tool && (
+                            <ToolInfoModal
+                              selectedValue={row._id}
+                              open={openInfoModal}
+                              tool={this.state.tool}
+                              onClose={e => this.handleClickCloseInfoModal()}
+                            />
+                          )}
                         </IconWrapper>
                       </SmallerTableCell>
 
@@ -224,7 +280,7 @@ class EnhancedTable extends React.Component {
   }
 }
 
-const mapState = state => {
+const mapState = (state, ownProps) => {
   return {
     data: select.toolsModel.getToolsState(state),
   };

@@ -11,7 +11,6 @@ class EnhancedTableHead extends React.Component {
 
   render() {
     const { order, orderBy, header } = this.props;
-    console.log(orderBy);
     return (
       <TableHead>
         <TableRow>

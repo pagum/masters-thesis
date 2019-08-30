@@ -1,5 +1,6 @@
-import styled from "styled-components";
-import { Field, Form } from "formik";
+import styled from 'styled-components';
+import { Field, Form } from 'formik';
+import { Paper } from '@material-ui/core';
 
 const LoginWindow = styled.div`
   background: ${props => props.theme.color.white};
@@ -86,7 +87,6 @@ const LoginPageWrapper = styled.div`
   min-height: 680px
   height: 100%;
   display:flex;
-
   justify-content:center;
   align-items:center;
 `;
@@ -102,7 +102,7 @@ const OkeLogo = styled.img`
   width: 70%;
 `;
 
-const LoginContainer = styled.div`
+const LoginContainer = styled(Paper)`
   padding: 10px 20px;
   width: 40%;
   height: 50%;
@@ -114,6 +114,7 @@ const LoginContainer = styled.div`
   flex-direction: column;
   z-index: 2;
   position: absolute;
+  background-color: white;
 `;
 
 export {
@@ -129,5 +130,5 @@ export {
   ShowHideButton,
   LoginPage,
   FieldButtonContainer,
-  LoginPageImg
+  LoginPageImg,
 };

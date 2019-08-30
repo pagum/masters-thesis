@@ -18,3 +18,8 @@ export const deleteTool = async toolId => {
   const response = await api.delete(`/deleteTool/${toolId}`);
   return response;
 };
+
+export const updateToollll = async (toolId, updatedParams) => {
+  const response = await api.patch(`/updateTool/${toolId}`, updatedParams);
+  return response;
+};

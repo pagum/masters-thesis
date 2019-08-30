@@ -29,7 +29,7 @@ class FormField extends React.Component {
     const { label, name, required, handleEdit, type, error } = this.props;
 
     return (
-      <div>
+      <>
         <FormControl required={required}>
           <InputLabel>{label}</InputLabel>
           <Input
@@ -39,7 +39,7 @@ class FormField extends React.Component {
 
           <FormHelperText error={error} />
         </FormControl>
-      </div>
+      </>
     );
   }
 }

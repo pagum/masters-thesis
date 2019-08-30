@@ -51,7 +51,6 @@ class Calculator extends React.Component {
     selectedTool: null,
   };
   handleChange = name => event => {
-    console.log(name, event);
     this.setState({
       [name]: event.target.value,
     });
